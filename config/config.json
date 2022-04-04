@@ -4,7 +4,7 @@
     "password": "123",
     "database": "db_challenge_game",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres"
   },
   "test": {
     "username": "root",
