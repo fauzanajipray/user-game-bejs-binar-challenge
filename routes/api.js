@@ -11,11 +11,12 @@ router.put("/usergame/:id", userGameController.update);
 router.delete("/usergame/:id", userGameController.destroy);
 
 // Route UserGameHistory
-router.get("/usergame/history", UserGameHistoryController.index);
-router.get("/usergame/history/:id", UserGameHistoryController.show);
-router.post("/usergame/history", UserGameHistoryController.store);
-router.put("/usergame/history/:id", UserGameHistoryController.update);
-router.delete("/usergame/history/:id", UserGameHistoryController.destroy);
+router.get("/history", UserGameHistoryController.index);
+router.get("/history/:id", UserGameHistoryController.show);
+router.post("/history", UserGameHistoryController.store);
+router.put("/history/:id", UserGameHistoryController.update);
+router.delete("/history/:id", UserGameHistoryController.destroy);
+
 
 
 module.exports = router;

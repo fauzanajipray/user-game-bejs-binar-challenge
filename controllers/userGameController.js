@@ -120,6 +120,12 @@ module.exports = {
                     id: id
                 }
             });
+            if (!userGame) {
+                return res.status(404).json({
+                    message: 'User Game not found'
+                });
+            }
+
             const userGameBiodata = await UserGameBiodata.update({
                 first_name,
                 last_name,
@@ -130,25 +136,24 @@ module.exports = {
                     user_id: id
                 }
             });
-            
-            const data = userGame.toJSON();
-            data.userGameBiodata = userGameBiodata.toJSON();
-
+            if (!userGameBiodata) {
+                return res.status(404).json({
+                    message: 'User Game Biodata not found'
+                });
+            }
             res.status(200).json({
                 message: 'UserGame updated',
-                data
+                data: null
             });
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
                 res.status(400).json({
                     message: error.message,
-                    data: null,
                     error: error.errors
                 });
             } else {
                 res.status(500).json({
                     message: error.message,
-                    data: null,
                     error: error.errors
                 });
             }
@@ -175,13 +180,11 @@ module.exports = {
             if (error.name === 'SequelizeValidationError') {
                 res.status(400).json({
                     message: error.message,
-                    data: null,
                     error: error.errors
                 });
             } else {
                 res.status(500).json({
                     message: error.message,
-                    data: null,
                     error: error.errors
                 });
             }

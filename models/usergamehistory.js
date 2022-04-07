@@ -13,9 +13,28 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   UserGameHistory.init({
-    score: DataTypes.INTEGER,
-    time_played: DataTypes.INTEGER,
-    user_id: DataTypes.INTEGER,
+    score: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    time_played: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isInt: true
+      }
+    },
   }, {
     sequelize,
     tableName: 'user_game_histories',
