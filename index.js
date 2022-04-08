@@ -1,4 +1,3 @@
-const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
 const port = 3000;
@@ -6,9 +5,12 @@ const morgan = require('morgan');
 const apiRouter = require('./routes/api');
 const multer = require('multer')
 const upload = multer();
+const bearerToken  = require('express-bearer-token');
 
 app.use(upload.any());
 app.use(morgan('dev'));
+
+app.use(bearerToken());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
