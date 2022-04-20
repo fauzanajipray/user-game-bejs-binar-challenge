@@ -7,3 +7,4 @@
 3. ``` sequelize db:migrate || npx sequelize-cli db:migrate ```
 4. ``` sequelize db:seed:all || npx sequelize-cli db:seed:all ```
 5. ``` npm start ```
+6. ``` Go to {{server}}/api-docs to see the Swagger API documentation . ```
