@@ -1,7 +1,7 @@
 const { UserGame, UserGameBiodata, UserGameHistory } = require('../models');
 
 module.exports = {
-    // Endpoint GET /usergame/history
+    // Endpoint GET /history
     index: async (req, res) => {
         try {
             const userGamesHistories = await UserGameHistory.findAll({
@@ -20,7 +20,7 @@ module.exports = {
             });
         }
     },
-    // Endpoint GET /usergame/history/:id
+    // Endpoint GET /history/:id
     show: async (req, res) => {
         try {
             const { id } = req.params;
@@ -42,7 +42,7 @@ module.exports = {
             });
         }
     },
-    // Endpoint POST /usergame/history
+    // Endpoint POST /history
     store: async (req, res) => {
         try {
             const { user_game_id, score, time_played } = req.body;
@@ -74,7 +74,7 @@ module.exports = {
             }
         }
     },
-    // Endpoint PUT /usergame/history/:id
+    // Endpoint PUT /history/:id
     update: async (req, res) => {
         try {
             const { user_game_id, score, time_played } = req.body;
@@ -113,7 +113,7 @@ module.exports = {
             }
         }
     },
-    // Endpoint DELETE /usergame/history/:id
+    // Endpoint DELETE /history/:id
     destroy: async (req, res) => {
         try {
             const id = req.params.id

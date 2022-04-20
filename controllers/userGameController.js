@@ -55,7 +55,7 @@ module.exports = {
             });
         }
     },
-    // Endpoint POST /usergame/history
+    // Endpoint POST /usergame
     store: async (req, res) => {
         try {
             const {
@@ -100,7 +100,7 @@ module.exports = {
             }
         }
     },
-    // Endpoint PUT /usergame/history/:id
+    // Endpoint PUT /usergame/:id
     update: async (req, res) => {
         try {
             const { id } = req.params;
@@ -159,7 +159,7 @@ module.exports = {
             }
         }
     },
-    // Endpoint DELETE /usergame/history/:id
+    // Endpoint DELETE /usergame/:id
     destroy: async (req, res) => {
         try {
             const { id } = req.params;
