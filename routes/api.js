@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const userGameController = require("../controllers/userGameController");
-const UserGameHistoryController = require("../controllers/userGameHistoryController");
+const userGameController = require("../controllers/api/userGameController");
+const UserGameHistoryController = require("../controllers/api/userGameHistoryController");
 
 // Route UserGame
 router.get("/usergame", userGameController.index);
@@ -16,8 +16,6 @@ router.get("/history/:id", UserGameHistoryController.show);
 router.post("/history", UserGameHistoryController.store);
 router.put("/history/:id", UserGameHistoryController.update);
 router.delete("/history/:id", UserGameHistoryController.destroy);
-
-
 
 module.exports = router;
 

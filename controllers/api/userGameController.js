@@ -1,4 +1,4 @@
-const { UserGame, UserGameBiodata, UserGameHistory } = require('../models');
+const { UserGame, UserGameBiodata, UserGameHistory } = require('../../models');
 
 module.exports = {
     // Endpoint GET /usergame
@@ -11,8 +11,7 @@ module.exports = {
                 userGame.toJSON()
             );
             data.map(userGame => {
-                // delete userGame.userGameBiodata.id;
-                // delete userGame.userGameBiodata.user_id;
+                delete userGame.password;
             });
             res.status(200).json({
                 message: 'Success',
