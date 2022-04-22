@@ -19,7 +19,7 @@ app.use(
       secret: "keyboard cat",
       resave: false,
       saveUninitialized: true,
-      cookie: { maxAge: 60000 },
+      cookie: { maxAge: 3600000 },
     })
 );
 app.use(flash());
@@ -44,11 +44,10 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     console.log(error);
     res.status(error.status || 500);
-    res.json({
-        error: {
-            message: error.message
-        }
-    });
+
+    req.headers.accept.includes("application/json")
+        ? res.json({ error: error.message, status: error.status })
+        : res.render("error", { error });
 });
 
 app.listen(port, () => console.log(`Example app listening on http://localhost:${port}`));

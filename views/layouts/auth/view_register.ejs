@@ -54,12 +54,40 @@
             .form-signin .form-floating:focus-within {
                 z-index: 2;
             }
-            .form-signin input[type="email"] {
+            .form-signin input[name="username"] {
                 margin-bottom: -1px;
                 border-bottom-right-radius: 0;
                 border-bottom-left-radius: 0;
             }
-            .form-signin input[type="password"] {
+            .form-signin input[name="password"] {
+                margin-bottom: 0px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .form-signin input[name="email"] {
+                margin-bottom: 0px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .form-signin input[name="first_name"] {
+                margin-bottom: 0px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .form-signin input[name="last_name"] {
+                margin-bottom: 0px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+            .form-signin input[name="address"] {
                 margin-bottom: 10px;
                 border-top-left-radius: 0;
                 border-top-right-radius: 0;
@@ -70,23 +98,38 @@
     </head>
     <body class="text-center">
         <main class="form-signin">
-            <form action="/login" method="POST">
-                <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            <form action="/register" method="POST">
+                <h1 class="h3 mb-3 fw-normal">Please register</h1>
                 <% if (alert.message != "") {%>
                     <div class="alert alert-<%= alert.status%>" role="alert">
                       <%= alert.message %>
                     </div>
                 <% } %>
                 <div class="form-floating">
-                    <input type="username" name="username" class="form-control" id="floatingInput" placeholder="yourUsername">
+                    <input type="username" name="username" class="form-control" id="floatingInput" placeholder="yourUsername" required>
                     <label for="floatingInput">Username</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required>
                     <label for="floatingPassword">Password</label>
                 </div>
-                <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <a href="/register" class="w-100 mt-2 btn btn-lg btn-outline-secondary">Register</a>
+                <div class="form-floating">
+                    <input type="email" name="email" class="form-control" id="floatingEmail" placeholder="Email" required>
+                    <label for="floatingEmail">Email</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="first_name" class="form-control" id="floatingFirstName" placeholder="First Name" required>
+                    <label for="floatingFirstName">First Name</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="last_name" class="form-control" id="floatingLastName" placeholder="Last Name" required>
+                    <label for="floatingLastName">Last Name</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" name="address" class="form-control" id="floatingAddress" placeholder="Address"required>
+                    <label for="floatingAddress">Address</label>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
                 <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
             </form>
         </main>

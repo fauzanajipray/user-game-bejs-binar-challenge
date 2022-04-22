@@ -8,14 +8,15 @@ const auth = require("../middlewares/auth");
 // Route Auth
 router.get("/login", authController.viewLogin);
 router.post("/login", authController.postLogin);
+router.get("/register", authController.viewRegister);
+router.post("/register", authController.postRegister);
 
 // Route Home
-router.use(auth);
-router.get("/", userGameController.viewHome);
-router.get("/logout", authController.getLogout);
+router.get("/", auth, userGameController.viewHome);
+router.get("/logout", auth, authController.getLogout);
 
-// // Route UserGame
-// router.get("/usergame", userGameController.index);
+// Route UserGame
+router.get("/usergame", userGameController.index);
 // router.get("/usergame/:id", userGameController.show);
 // router.post("/usergame", userGameController.store);
 // router.put("/usergame/:id", userGameController.update);
@@ -27,6 +28,7 @@ router.get("/logout", authController.getLogout);
 // router.post("/history", UserGameHistoryController.store);
 // router.put("/history/:id", UserGameHistoryController.update);
 // router.delete("/history/:id", UserGameHistoryController.destroy);
+
 
 module.exports = router;
 

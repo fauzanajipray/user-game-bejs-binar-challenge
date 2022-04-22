@@ -22,12 +22,12 @@ module.exports = {
                 userGame.toJSON()
             );
             data.map(userGame => {
-                // delete userGame.userGameBiodata.id;
-                // delete userGame.userGameBiodata.user_id;
+                delete userGame.password
             });
-            res.status(200).json({
-                message: 'Success',
-                data: data
+            res.render("layouts/usergame/index", {
+                title: "User",
+                active: "user",
+                data
             })
         } catch (error) {
             res.status(500).json({
