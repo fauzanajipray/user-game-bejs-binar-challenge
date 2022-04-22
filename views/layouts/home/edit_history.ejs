@@ -1,0 +1,47 @@
+<%- include("../../partials/header.ejs") %> 
+<%- include("../../partials/nav.ejs") %> 
+
+<div class="container">
+    <div class="mt-2">
+        <h2 class="display-4 mb">Edit History</h2>
+        <% if (alert.message != "") {%>
+          <div class="alert alert-<%= alert.status %>" role="alert">
+            <%= alert.message %>
+          </div>
+        <% } %>
+        <div class="card mb-3 mt-3">
+            <div class="card-body">
+                <form action="/history" method="POST">
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr>
+                            <td class="d-flex justify-content-between">
+                                <div>Score</div>
+                                <div> : </div>
+                            </td>
+                          <td>
+                              <input type="number" name="score" value="<%= data.score %>" class="form-control" min="0" max="100">
+                            </td>
+                        </tr>
+                        <tr>
+                          <td class="d-flex justify-content-between"> 
+                              <div class="label">
+                                Time Played <span class="text-secondary">(in milliseconds)</span>
+                              </div>
+                              <div> : </div>
+                          <td><input type="number" name="time_played" value="<%= data.time_played %>" class="form-control"></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <a href="/" class="btn btn-danger m-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary m-2">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+</div>
+
+<%- include("../../partials/footer.ejs") %> 

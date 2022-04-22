@@ -5,6 +5,7 @@ const morgan = require('morgan');
 const apiRouter = require('./routes/api');
 const webRouter = require('./routes/web');
 const multer = require('multer')
+var path = require("path");
 const upload = multer();
 const swaggerJSON = require('./swagger.json');
 const swaggerUI = require('swagger-ui-express');
@@ -29,6 +30,7 @@ app.use(upload.any());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Router
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));

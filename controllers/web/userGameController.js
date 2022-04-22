@@ -1,17 +1,6 @@
 const { UserGame, UserGameBiodata, UserGameHistory } = require('../../models');
 
 module.exports = {
-    // Endpoint: /
-    viewHome: async (req, res) => {
-        try {
-            res.render("layouts/index", {
-                title: "Home",
-                active: "home",
-            })
-        } catch (error) {
-            res.redirect("/");
-        }
-    },
     // Endpoint GET /usergame
     index: async (req, res) => {
         try {

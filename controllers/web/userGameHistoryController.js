@@ -42,21 +42,27 @@ module.exports = {
             });
         }
     },
+    
+    
     // Endpoint POST /history
     store: async (req, res) => {
         try {
-            const { user_game_id, score, time_played } = req.body;
-
+            const {score, time_played } = req.body;
+            const user_id = req.session.user.id;
             const userGameHistory = await UserGameHistory.create({
                 score: score,
                 time_played: time_played,
-                user_id: user_game_id,
+                user_id: user_id,
             });
-
-            res.status(201).json({
-                message: 'Success',
-                data: userGameHistory.toJSON()
-            });
+            if (!userGameHistory) {
+                return res.status(404).json({
+                    message: 'User Game History not found',
+                    data: null
+                });
+            }
+            req.flash("alertMessageHistory", "Create history success!");
+            req.flash("alertStatusHistory", "success");
+            res.redirect('/');
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
                 const errors = error.errors.map(err => err.message);
@@ -77,39 +83,34 @@ module.exports = {
     // Endpoint PUT /history/:id
     update: async (req, res) => {
         try {
-            const { user_game_id, score, time_played } = req.body;
+            const { score, time_played } = req.body;
             const id = req.params.id
+            const user_id = req.session.user.id;
 
             const userGameHistory = await UserGameHistory.update({
                 score: score,
                 time_played: time_played,
-                user_id: user_game_id,
+                user_id: user_id,
             }, { where: { id : id } });
 
             if (!userGameHistory) {
-                return res.status(404).json({
-                    message: 'User Game History not found',
-                    data: null
-                });
-                
+                req.flash("alertMessageHistory", "User Game History not found");
+                req.flash("alertStatusHistory", "danger");
+                res.redirect('/profile/edit-history/' + id);
             } 
-            res.status(200).json({
-                message: 'Success',
-                data: null
-            })
+            req.flash("alertMessageHistory", "Update history success!");
+            req.flash("alertStatusHistory", "success");
+            res.redirect('/');
+            
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
-                const errors = error.errors.map(err => err.message);
-                res.status(400).json({
-                    message: 'Failed',
-                    data: null,
-                    error: errors
-                });
+                req.flash("alertMessage", "Update history failed!");
+                req.flash("alertStatus", "danger");
+                res.redirect('/profile/edit-history/'+ req.params.id)
             } else {
-                res.status(500).json({
-                    message: error.message,
-                    data: null,
-                });
+                req.flash("alertMessage", "Internal Server Error!");
+                req.flash("alertStatus", "danger");
+                res.redirect('/profile/edit-history/'+ req.params.id)
             }
         }
     },
