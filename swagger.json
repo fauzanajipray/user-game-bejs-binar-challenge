@@ -23,6 +23,10 @@
     {
       "name": "history",
       "description": "History of Usergames"
+    },
+    {
+      "name": "auth",
+      "description": "Everything about Authentication"
     }
   ],
   "schemes": [
@@ -819,6 +823,75 @@
           }
         }
       }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login to the application",
+        "description": "",
+        "operationId": "loginUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Login credentials",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "Kennedy_Wolf"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "gj7pTZ1rAkNQJjW"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Login success",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Success"
+                },
+                "data": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
     }
   },
   "securityDefinitions": {
@@ -878,7 +951,7 @@
         }
       }
     },
-    "UsergameBiodataHistory": {
+    "UsergameHistory": {
       "type": "object",
       "properties": {
         "id": {

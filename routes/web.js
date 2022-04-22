@@ -12,28 +12,23 @@ router.post("/login", authController.postLogin);
 router.get("/register", authController.viewRegister);
 router.post("/register", authController.postRegister);
 
-router.use(auth);
-router.get("/logout", authController.getLogout);
+router.get("/logout", auth, authController.getLogout);
 
-router.get("/", homeController.viewHome);
-router.get("/profile/update", homeController.viewUpdateProfile);
-router.put("/profile/update", homeController.updateProfile);
-router.get("/profile/add-history", homeController.viewAddHistory);
-router.get("/profile/edit-history/:id", homeController.viewEditHistory);
+router.get("/", auth, homeController.viewHome);
+router.get("/profile/update", auth, homeController.viewUpdateProfile);
+router.put("/profile/update", auth, homeController.updateProfile);
+router.get("/profile/add-history", auth, homeController.viewAddHistory);
+router.get("/profile/edit-history/:id", auth, homeController.viewEditHistory);
 
 // Route UserGame
-router.get("/usergame", userGameController.index);
-// router.get("/usergame/:id", userGameController.show);
-// router.post("/usergame", userGameController.store);
-// router.put("/usergame/:id", userGameController.update);
-// router.delete("/usergame/:id", userGameController.destroy);
+router.get("/usergame", auth, userGameController.index);
+router.get("/usergame/:id", auth, userGameController.viewDetailUserGame);
 
 // Route UserGameHistory
-// router.get("/history", UserGameHistoryController.index);
-router.post("/history", UserGameHistoryController.store);
-router.put("/history/:id", UserGameHistoryController.update);
-// router.delete("/history/:id", UserGameHistoryController.destroy);
-
+router.get("/history", auth, UserGameHistoryController.index);
+router.post("/history", auth, UserGameHistoryController.store);
+router.put("/history/:id", auth, UserGameHistoryController.update);
+router.delete("/history/:id", auth, UserGameHistoryController.destroy);
 
 module.exports = router;
 

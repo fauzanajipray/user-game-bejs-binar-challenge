@@ -65,6 +65,15 @@ module.exports = {
                 last_name,
                 address,
             } = req.body;
+            const userGameCheck = await UserGame.findOne({
+                where: { username: username }
+            })
+            if (userGameCheck) {
+                return res.status(400).json({
+                    status: 'Error',
+                    message: 'Username already exist'
+                })
+            }
             const userGame = await UserGame.create({
                 username,
                 password

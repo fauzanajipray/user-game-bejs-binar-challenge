@@ -3,18 +3,8 @@
 
 <div class="container">
     <div class="mt-2">
-        <h1 class="display-4 mb">Your Profile</h1>
-        <% if (alert.message != "") {%>
-          <div class="alert alert-<%= alert.status%>" role="alert">
-            <%= alert.message %>
-          </div>
-        <% } %>
+        <h1 class="display-4 mb">Detail Usergame</h1>
         <div class="card mb-3 mt-3">
-          <div class="card-header d-flex justify-content-end">
-            <a href="/profile/update" class="btn btn-success btn-sm" style="max-height: 35px;">
-              <li class="fas fa-edit"></li>
-              Edit Profile</a>
-          </div>
           <div class="card-body">
               <table class="table table-borderless">
                 <tbody>
@@ -39,18 +29,8 @@
             </div>
         </div>
         <hr class="my-4">
-        <h1 class="display-6 mb">Your Histories</h1>
-        <% if (alert.message2 != "") {%>
-          <div class="alert alert-<%= alert.status2%>" role="alert">
-            <%= alert.message2 %>
-          </div>
-        <% } %>
+        <h1 class="display-6 mb">Histories</h1>
         <div class="card mb-3 mt-3">
-          <div class="card-header d-flex justify-content-end">
-            <a href="/profile/add-history" class="btn btn-primary btn-sm" style="max-height: 35px;">
-              <li class="fas fa-plus"></li>
-               Add</a>
-          </div>
           <div class="card-body">
             <table class="table">
               <thead>
@@ -59,7 +39,6 @@
                   <th scope="col">Score</th>
                   <th scope="col">Time Played</th>
                   <th scope="col">Date</th>
-                  <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -74,16 +53,6 @@
                     <td><%= history.score %></td>
                     <td><%= history.time_played/60000 %> minutes</td>
                     <td><%= history.createdAt %></td>
-                    <td>
-                      <form action="/history/<%= history.id %>?_method=Delete" method="post">
-                      <a href="/profile/edit-history/<%= history.id %>" class="btn btn-success btn-sm">
-                        <li class="fas fa-edit"></li>
-                        Edit</a>
-                        <button type="submit" href="/history/<%= history.id %>?_method=Delete" class="btn btn-danger btn-sm" style="max-height: 35px;">
-                          <li class="fas fa-trash"></li>
-                          Delete</button>
-                      </form>
-                    </td>
                   </tr>
                 <% })} %> 
               </tbody>

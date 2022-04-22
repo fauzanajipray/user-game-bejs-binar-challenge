@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authController = require("../controllers/api/authController");
 const userGameController = require("../controllers/api/userGameController");
 const UserGameHistoryController = require("../controllers/api/userGameHistoryController");
 
@@ -16,6 +17,10 @@ router.get("/history/:id", UserGameHistoryController.show);
 router.post("/history", UserGameHistoryController.store);
 router.put("/history/:id", UserGameHistoryController.update);
 router.delete("/history/:id", UserGameHistoryController.destroy);
+
+
+// Route Auth
+router.post("/login", authController.postLogin);
 
 module.exports = router;
 

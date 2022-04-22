@@ -3,16 +3,17 @@
 
 <div class="container">
     <div class="mt-2">
-        <h1 class="display-4 mb">All Usergames</h1>
+        <h1 class="display-4 mb">All Histories</h1>
         <div class="card mb-3 mt-3">
           <div class="card-body">
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Date Created</th>
-                  <th scope="col">Action</th>
+                    <th scope="col">#</th>
+                    <th scope="col">Score</th>
+                    <th scope="col">Time Played</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">User</th>
                 </tr>
               </thead>
               <tbody>
@@ -21,15 +22,16 @@
                     <td colspan="5" class="text-center p-2">No data</td>
                   </tr>
                 <% } else {  %> 
-                <% data.forEach((user, i) => { %>
+                <% data.forEach((history, i) => { %>
                   <tr>
                     <th scope="row"><%= i+1 %></th>
-                    <td><%= user.username %></td>
-                    <td><%= user.createdAt %></td>
+                    <td><%= history.score %></td>
+                    <td><%= history.time_played/60000 %> minutes</td>
+                    <td><%= history.createdAt %></td>
                     <td>
-                      <a href="/usergame/<%= user.id %>" class="btn btn-primary btn-sm">
-                        <li class="fas fa-eye"></li>
-                        Detail</a>
+                        <a href="/usergame/<%= history.user_id %>" class="btn btn-primary btn-sm">
+                            <li class="fas fa-eye"></li>
+                        </a>
                     </td>
                   </tr>
                 <% })} %> 

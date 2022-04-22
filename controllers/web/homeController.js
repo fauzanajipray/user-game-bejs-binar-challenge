@@ -35,6 +35,8 @@ module.exports = {
                 data
             })
         } catch (error) {
+            req.flash("alertMessage", "Internal Server Error");
+            req.flash("alertStatus", "danger");
             res.redirect("/");
         }
     },
@@ -62,6 +64,8 @@ module.exports = {
                 data
             })
         } catch (error) {
+            req.flash("alertMessage", "Internal Server Error");
+            req.flash("alertStatus", "danger");
             res.redirect("/");
         }
     },
@@ -123,6 +127,8 @@ module.exports = {
             req.flash("alertStatus", "success");
             res.redirect("/");
         } catch (error) {
+            req.flash("alertMessage", "Internal Server Error");
+            req.flash("alertStatus", "danger");
             res.redirect("/");
         }
     },
@@ -139,6 +145,8 @@ module.exports = {
                 alert,
             })
         } catch (error) {
+            req.flash("alertMessage", "Internal Server Error");
+            req.flash("alertStatus", "danger");
             res.redirect("/");
         }
     },
@@ -166,7 +174,9 @@ module.exports = {
                 alert,
                 data
             })
-        } catch (error) {
+        } catch (error) { 
+            req.flash("alertMessage", "Internal Server Error");
+            req.flash("alertStatus", "danger");
             res.redirect("/");
         }
     }
