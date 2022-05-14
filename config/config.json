@@ -15,7 +15,7 @@
   },
   "production": {
     "username": "vxjrtjoturewis",
-    "password": "1ed1b39bb510d1a060c89dfca186eadaae86ea81c76a139197490e093f1f1816",
+    "password": "97c2b3124eb4c1b01dca19a0f5342e6bde2594e1a21120f45a51d363aeed27da",
     "database": "dd00o0j75cja5g",
     "host": "ec2-52-4-104-184.compute-1.amazonaws.com",
     "port": 5432,
