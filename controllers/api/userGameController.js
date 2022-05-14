@@ -27,6 +27,7 @@ module.exports = {
     show: async (req, res) => {
         try {
             const { id } = req.params;
+            
             const userGame = await UserGame.findOne({
                 where: {
                     id: id
@@ -128,7 +129,9 @@ module.exports = {
                     id: id
                 }
             });
-            if (!userGame) {
+            console.log(`userGame: ${userGame}`);
+            
+            if (userGame[0] === 0) {
                 return res.status(404).json({
                     message: 'User Game not found'
                 });
@@ -144,7 +147,7 @@ module.exports = {
                     user_id: id
                 }
             });
-            if (!userGameBiodata) {
+            if (userGameBiodata[0] === 0) {
                 return res.status(404).json({
                     message: 'User Game Biodata not found'
                 });
