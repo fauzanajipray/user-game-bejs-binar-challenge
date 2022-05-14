@@ -4,7 +4,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 jobs:
-  build:
+  BUILD:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,10 +13,6 @@ jobs:
         uses: actions/setup-node@v2
         with: 
           node-version: "14.x"
-      - name: Decrypt large secret
-        run: ./.github/scripts/decrypt_secret.sh
-        env:
-          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       - name: Install dependencies
         run: npm install
       - name: Install sequlize-cli
@@ -26,13 +22,14 @@ jobs:
       # - name: Test
       #   run: npm test
 
-  deploy:
+  DEPLOY:
     runs-on: ubuntu-latest
     needs: [build]
+    enviroment: PROD
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: HEROKU_API_KEY
+          heroku_api_key: echo "$HEROKU_API_KEY"
           heroku_app_name: "user-game-bejs"
           heroku_email: "fauzanjr1@gmail.com"
