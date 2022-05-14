@@ -22,7 +22,7 @@ let data2 = {
     "address": "Mars Barat 1 Blok A No.1"
 };
 
-describe("UserGame API Testing", () => {
+describe("UserGame API Integration Testing", () => {
 
     // Positive Test 1
     test("GET /api/usergame - Should Success Get All User Games ", async () => {
