@@ -20,7 +20,7 @@ jobs:
       - name: Migrate DB
         run: npx sequelize db:migrate --env production
       - name: Seeding DB
-        run: npx sequelize db:seed:all
+        run: npx sequelize db:seed:all --env production
       # - name: Test
       #   run: npm test
 
