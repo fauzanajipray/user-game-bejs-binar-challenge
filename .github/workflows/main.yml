@@ -25,7 +25,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: [build]
-    enviroment: PROD
+    env: 
+      ENV_VARIABLE: PROD
     steps:
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12
