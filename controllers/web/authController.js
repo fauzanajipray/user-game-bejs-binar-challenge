@@ -119,6 +119,7 @@ module.exports = {
           res.redirect("/register");
         }
       } catch (error) {
+        console.log(error);
         req.flash("alertMessage", "Something wrong!");
         req.flash("alertStatus", "danger");
         res.redirect("/register");
