@@ -89,7 +89,7 @@ module.exports = {
           last_name,
           address,
         } = req.body;
-
+        console.log(req.body);
         const userGame = await UserGame.findOne({ where: { username: username }});
         if(userGame) {
           req.flash("alertMessage", "Username already exist!");
@@ -100,19 +100,24 @@ module.exports = {
           username: username,
           password: password,
         });
-        await UserGameBiodata.create({
-          first_name: first_name,
-          last_name: last_name,
-          address: address,
-          email: email,
-          user_id: newUserGame.id,
-        });
-
-        req.session.user = {
-          id: newUserGame.id,
-          username: newUserGame.username,
-        };
-        res.redirect("/");
+        if (newUserGame) {
+          const newUserGameBiodata = await UserGameBiodata.create({
+            user_game_id: newUserGame.id,
+            first_name: first_name,
+            last_name: last_name,
+            address: address,
+            email: email,
+          });
+          if (newUserGameBiodata) {
+            req.flash("alertMessage", "Register success!");
+            req.flash("alertStatus", "success");
+            res.redirect("/login");
+          }
+        } else {
+          req.flash("alertMessage", "Register failed!");
+          req.flash("alertStatus", "danger");
+          res.redirect("/register");
+        }
       } catch (error) {
         req.flash("alertMessage", "Something wrong!");
         req.flash("alertStatus", "danger");

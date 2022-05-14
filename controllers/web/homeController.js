@@ -28,6 +28,7 @@ module.exports = {
                     as: 'userGameHistories'
                 }]
             });
+            console.log(data);
             res.render("layouts/home/index", {
                 title: "Home",
                 active: "home",

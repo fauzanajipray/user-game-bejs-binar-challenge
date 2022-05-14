@@ -1,5 +1,5 @@
 {
-  "name": "challenge",
+  "name": "challenge-05",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
     "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Fauzan Aji Prayoga",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.0",
