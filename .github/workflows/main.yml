@@ -21,8 +21,19 @@ jobs:
         run: npx sequelize db:migrate --env production
       # - name: Seeding DB
       #   run: npx sequelize db:seed:all --env production
-      # - name: Test
-      #   run: npm test
+      
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "14.x"
+      - name: Test
+        run: npm test
 
   deploy:
     runs-on: ubuntu-latest
