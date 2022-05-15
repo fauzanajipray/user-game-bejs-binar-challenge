@@ -37,9 +37,18 @@ module.exports = {
             });
 
         } catch (error) {
-            res.status(500).json({
-                message: error.message
-            });
+            if (error.name === 'SequelizeDatabaseError') {
+                return res.status(400).json({
+                    message: "Invalid Data Type",
+                    data: null,
+                    error: error.message
+                });
+            } else {
+                return res.status(500).json({
+                    message: error.message,
+                    data: null
+                });
+            }
         }
     },
     // Endpoint POST /history
@@ -61,9 +70,21 @@ module.exports = {
             if (error.name === 'SequelizeValidationError') {
                 const errors = error.errors.map(err => err.message);
                 res.status(400).json({
-                    message: 'Failed',
+                    message: 'Bad Request',
                     data: null,
                     error: errors
+                });
+            } else if (error.name === 'SequelizeForeignKeyConstraintError') {
+                res.status(400).json({
+                    message: 'Foreign Key Constraint Error',
+                    data: null,
+                    error: error.message
+                });
+            } else if (error.name === 'SequelizeDatabaseError') {
+                res.status(400).json({
+                    message: 'Invalid Data Type',
+                    data: null,
+                    error: error.message
                 });
             } else {
                 console.log(error);
@@ -86,12 +107,11 @@ module.exports = {
                 user_id: user_game_id,
             }, { where: { id : id } });
 
-            if (!userGameHistory) {
+            if (userGameHistory[0] === 0) {
                 return res.status(404).json({
                     message: 'User Game History not found',
                     data: null
                 });
-                
             } 
             res.status(200).json({
                 message: 'Success',
@@ -104,6 +124,18 @@ module.exports = {
                     message: 'Failed',
                     data: null,
                     error: errors
+                });
+            } else if (error.name === 'SequelizeForeignKeyConstraintError') {
+                res.status(400).json({
+                    message: 'Foreign Key Constraint Error',
+                    data: null,
+                    error: error.message
+                });
+            } else if (error.name === 'SequelizeDatabaseError') {
+                res.status(400).json({
+                    message: 'Invalid Data Type',
+                    data: null,
+                    error: error.message
                 });
             } else {
                 res.status(500).json({
@@ -121,7 +153,7 @@ module.exports = {
             const userGameHistory = await UserGameHistory.destroy({
                 where: { id : id }
             });
-            if (!userGameHistory) {
+            if (userGameHistory === 0) {
                 return res.status(404).json({
                     message: 'User Game History not found',
                     data: null
@@ -138,6 +170,12 @@ module.exports = {
                     message: error.message,
                     data: null,
                     error: errors
+                });
+            } else if (error.name === 'SequelizeDatabaseError') {
+                res.status(400).json({
+                    message: 'Invalid Data Type',
+                    data: null,
+                    error: error.message
                 });
             } else {
                 res.status(500).json({

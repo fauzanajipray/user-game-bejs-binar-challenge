@@ -23,35 +23,45 @@ let data2 = {
 };
 
 describe("UserGame API Integration Testing", () => {
+    
+    afterAll(async () => {
+        try {
+            await sequelize.query(`DELETE FROM user_games WHERE id = ${id}`, { type: QueryTypes.DELETE });
+            await sequelize.query("TRUNCET user_game, user_game_biodata, user_game_histories RESTART IDENTITY;", 
+          { type: QueryTypes.RAW });
+        } catch (error) {
+          //console.log(error)
+        }
+    })
 
     // Positive Test 1
+    test("POST /api/usergame - Should Success Create User Game ", async () => {
+        const { body, statusCode } = await request(app).post(`/api/usergame`).send(data);
+        id = body.data.id;
+        expect(statusCode).toEqual(201);
+        expect(body.message).toEqual("UserGame created");
+    });
+    
+    // Positive Test 2
     test("GET /api/usergame - Should Success Get All User Games ", async () => {
         const { body, statusCode } = await request(app).get(`/api/usergame`);
         expect(statusCode).toEqual(200);
         expect(body.message).toEqual("Success");
         expect(body.data.length).toBeGreaterThan(0);
     });
-    // Positive Test 2
-    test("POST /api/usergame - Should Success Create User Game ", async () => {
-       
-        const { body, statusCode } = await request(app).post(`/api/usergame`).send(data);
-        id = body.data.id;
-        console.log(`id: ${id}`);
-        expect(statusCode).toEqual(201);
-        expect(body.message).toEqual("UserGame created");
-    });
+
     // Positive Test 3
     test("GET /api/usergame/:id - Shoud Success Get Usergame By Id ", async () => {
         const { body, statusCode } = await request(app).get(`/api/usergame/${id}`);
         expect(statusCode).toEqual(200);
         expect(body.message).toEqual("Success");
     });
+
     // Positive Test 4
     test("PUT /api/usergame/:id - Should Success Update Usergame By Id ", async () => {
         const { body, statusCode } = await request(app).put(`/api/usergame/${id}`).send(data2);
         expect(statusCode).toEqual(200);
         expect(body.message).toEqual("UserGame updated");
-
         const { body: body2, statusCode: statusCode2 } = await request(app).get(`/api/usergame/${id}`);
         expect(statusCode2).toEqual(200);
         expect(body2.message).toEqual("Success");
@@ -116,7 +126,4 @@ describe("UserGame API Integration Testing", () => {
         expect(body.message).toEqual("User Game not found");
     })
 
-    afterAll(async () => {
-        await sequelize.query(`DELETE FROM user_games WHERE id = ${id}`, { type: QueryTypes.DELETE });
-    });
 })
