@@ -3,6 +3,7 @@ const { faker } = require('@faker-js/faker');
 
 module.exports = {
   async up (queryInterface, Sequelize) {
+    // For now, seeder just for insert data if table is empty or never used
     
     const data = [];
     for (let i = 1; i <= 5; i++) {

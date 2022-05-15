@@ -3,6 +3,7 @@ const { faker } = require('@faker-js/faker')
 
 module.exports = {
   async up (queryInterface, Sequelize) {
+    // For now, seeder just for insert data if table is empty or never used
     
     const data = [];
     for (let i = 0; i < 5; i++) {
@@ -17,7 +18,7 @@ module.exports = {
       })
     }
     console.log(data);
-    await queryInterface.bulkInsert('user_games', data, {});
+    const data2 = await queryInterface.bulkInsert('user_games', data, {});
   },
 
   async down (queryInterface, Sequelize) {

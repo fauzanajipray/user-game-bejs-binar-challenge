@@ -129,7 +129,7 @@ module.exports = {
                     id: id
                 }
             });
-            console.log(`userGame: ${userGame}`);
+            console.log(`CEKKKKKKKKKKKKKKKKKKKKKKKKKKKK ${userGame}`);
             
             if (userGame[0] === 0) {
                 return res.status(404).json({
