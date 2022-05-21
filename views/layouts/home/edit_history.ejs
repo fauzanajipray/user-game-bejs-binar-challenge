@@ -11,7 +11,7 @@
         <% } %>
         <div class="card mb-3 mt-3">
             <div class="card-body">
-                <form action="/history" method="POST">
+                <form action="/history/<%= data.id  %>?_method=PUT" method="POST">
                     <table class="table table-borderless">
                       <tbody>
                         <tr>
@@ -35,7 +35,7 @@
                     </table>
                     <div class="d-flex justify-content-end">
                         <a href="/" class="btn btn-danger m-2">Cancel</a>
-                        <button type="submit" class="btn btn-primary m-2">Add</button>
+                        <button type="submit" class="btn btn-success m-2">Edit</button>
                     </div>
                 </form>
             </div>

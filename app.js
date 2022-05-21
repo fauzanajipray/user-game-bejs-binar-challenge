@@ -6,6 +6,7 @@ const webRouter = require('./routes/web');
 const multer = require('multer')
 var path = require("path");
 const upload = multer();
+const passport = require('passport');
 const swaggerJSON = require('./swagger.json');
 const swaggerUI = require('swagger-ui-express');
 const methodOverride = require("method-override");
@@ -22,6 +23,9 @@ app.use(
       cookie: { maxAge: 3600000 },
     })
 );
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 app.use(methodOverride("_method"));

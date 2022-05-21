@@ -3,7 +3,9 @@
 
 <div class="container">
     <div class="mt-2">
-        <h1 class="display-4 mb">Your Profile</h1>
+        <h1 class="display-4 mb">Your Profile 
+          
+        </h1>
         <% if (alert.message != "") {%>
           <div class="alert alert-<%= alert.status%>" role="alert">
             <%= alert.message %>
@@ -20,7 +22,14 @@
                 <tbody>
                   <tr>
                     <td>Name</th>
-                    <td>: &nbsp&nbsp&nbsp <%= data.userGameBiodata.first_name %> <%= data.userGameBiodata.last_name %> </td>
+                    <td>
+                      : &nbsp&nbsp&nbsp <%= data.userGameBiodata.first_name %> <%= data.userGameBiodata.last_name %> 
+                      <% if (data.role == "admin") {%>
+                        <span class="h4 badge bg-primary">Admin</span>
+                      <% } else {%>
+                        <span class="h4 badge bg-success">User</span>
+                      <% } %>
+                    </td>
                   </tr>
                   <tr>
                     <td>Username</th>

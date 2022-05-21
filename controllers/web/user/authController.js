@@ -1,4 +1,6 @@
-const { UserGame, UserGameBiodata } = require('../../models');
+const { UserGame, UserGameBiodata } = require('../../../models');
+
+const passport = require('../../../lib/passport-local');
 
 module.exports = {
     // Endpoint GET /login
@@ -20,12 +22,17 @@ module.exports = {
             res.redirect("/");
         }
     },
+
     // Endpoint POST /login
-    postLogin: async (req, res) => {
+    postLogin: passport.authenticate('local', {
+      successRedirect: '/',
+      failureRedirect: '/login',
+      failureFlash: true,
+    }),
+    postLogin2: async (req, res) => {
       try {
         const { username, password } = req.body;
         const userGame = await UserGame.findOne({ where: { username: username }});
-
         if(!userGame) {
           req.flash("alertMessage", "Username not found!");
           req.flash("alertStatus", "danger");
@@ -51,6 +58,7 @@ module.exports = {
       }
     },
     // Endpoint GET /logout
+    // getLogout: passport
     getLogout: async (req, res) => {
       try {
         req.session.destroy();
@@ -89,20 +97,14 @@ module.exports = {
           last_name,
           address,
         } = req.body;
-        console.log(req.body);
-        const userGame = await UserGame.findOne({ where: { username: username }});
-        if(userGame) {
-          req.flash("alertMessage", "Username already exist!");
-          req.flash("alertStatus", "danger");
-          res.redirect("/register");
-        }
-        const newUserGame = await UserGame.create({
+        const newUserGame = await UserGame.register({
           username: username,
           password: password,
-        });
+        })
+        console.log(newUserGame);
         if (newUserGame) {
           const newUserGameBiodata = await UserGameBiodata.create({
-            user_game_id: newUserGame.id,
+            user_id: newUserGame.id,
             first_name: first_name,
             last_name: last_name,
             address: address,
@@ -119,10 +121,15 @@ module.exports = {
           res.redirect("/register");
         }
       } catch (error) {
-        console.log(error);
-        req.flash("alertMessage", "Something wrong!");
-        req.flash("alertStatus", "danger");
-        res.redirect("/register");
+        if (error.name == "SequelizeUniqueConstraintError") {
+          req.flash("alertMessage", "Username already exist!");
+          req.flash("alertStatus", "danger");
+          res.redirect("/register");
+        } else {
+          req.flash("alertMessage", "Something wrong!");
+          req.flash("alertStatus", "danger");
+          res.redirect("/register");
+        }
       }
     },
 }

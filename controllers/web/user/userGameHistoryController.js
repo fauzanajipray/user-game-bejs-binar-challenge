@@ -1,4 +1,4 @@
-const { UserGameHistory } = require('../../models');
+const { UserGameHistory } = require('../../../models');
 
 module.exports = {
     // Endpoint GET /history
@@ -21,22 +21,22 @@ module.exports = {
     // Endpoint POST /history
     store: async (req, res) => {
         try {
-            const {score, time_played } = req.body;
-            const user_id = req.session.user.id;
+            const {score, time_played } = req.body
+            const user_id = req.user.toJSON().id
             const userGameHistory = await UserGameHistory.create({
                 score: score,
                 time_played: time_played,
                 user_id: user_id,
-            });
+            })
             if (!userGameHistory) {
                 return res.status(404).json({
                     message: 'User Game History not found',
                     data: null
-                });
+                })
             }
-            req.flash("alertMessageHistory", "Create history success!");
-            req.flash("alertStatusHistory", "success");
-            res.redirect('/');
+            req.flash("alertMessageHistory", "Create history success!")
+            req.flash("alertStatusHistory", "success")
+            res.redirect('/')
         } catch (error) {
             if (error.name === 'SequelizeValidationError') {
                 const errors = error.errors.map(err => err.message);
@@ -59,7 +59,7 @@ module.exports = {
         try {
             const { score, time_played } = req.body;
             const id = req.params.id
-            const user_id = req.session.user.id;
+            const user_id = req.user.toJSON().id
 
             const userGameHistory = await UserGameHistory.update({
                 score: score,

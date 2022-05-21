@@ -17,10 +17,12 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
+      // role : enum('admin', 'user'),
       role: {
-        type: Sequelize.STRING,
+        type: Sequelize.ENUM,
         defaultValue: 'user', // user, admin
-        allowNull: false
+        allowNull: false,
+        values: ['user', 'admin']
       },
       created_at: {
         allowNull: false,

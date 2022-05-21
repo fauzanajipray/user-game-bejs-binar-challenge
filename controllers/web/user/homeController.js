@@ -1,4 +1,4 @@
-const { UserGame, UserGameBiodata, UserGameHistory } = require('../../models');
+const { UserGame, UserGameBiodata, UserGameHistory } = require('../../../models');
 
 module.exports = {
     // Endpoint: /
@@ -15,10 +15,11 @@ module.exports = {
                 status2: alertStatusHistory
             };
 
-            const idUser = req.session.user.id;
+            const { id } = req.user.toJSON();
+            console.log(req.user.toJSON());
             const data = await UserGame.findOne({
                 where: {
-                    id: idUser
+                    id: id
                 },
                 include: [{
                     model: UserGameBiodata,
@@ -28,7 +29,7 @@ module.exports = {
                     as: 'userGameHistories'
                 }]
             });
-            console.log(data);
+
             res.render("layouts/home/index", {
                 title: "Home",
                 active: "home",
@@ -38,8 +39,11 @@ module.exports = {
         } catch (error) {
             req.flash("alertMessage", "Internal Server Error");
             req.flash("alertStatus", "danger");
-            res.redirect("/");
+            res.render("error", {
+                error
+            })
         }
+
     },
     // Endpoint: /profile/update
     viewUpdateProfile: async (req, res) => {
@@ -48,10 +52,10 @@ module.exports = {
             const alertStatus = req.flash("alertStatus");
             const alert = { message: alertMessage, status: alertStatus };
 
-            const idUser = req.session.user.id;
+            const { id } = req.user.toJSON();
             const data = await UserGame.findOne({
                 where: {
-                    id: idUser
+                    id: id
                 },
                 include: [{
                     model: UserGameBiodata,
@@ -67,16 +71,16 @@ module.exports = {
         } catch (error) {
             req.flash("alertMessage", "Internal Server Error");
             req.flash("alertStatus", "danger");
-            res.redirect("/");
+            res.render("error", {
+                error
+            })
         }
     },
     // Endpoint: PUT /profile/update
     updateProfile: async (req, res) => {
         try {
-            console.log("Update Profile with put");
-            console.log(req.body);
-            const idUser = req.session.user.id;
-            const usernameSession = req.session.username;
+            const user = req.user.toJSON();
+            const usernameSession = user.username;
             const { 
                 username,
                 email,
@@ -99,15 +103,15 @@ module.exports = {
                 username: username
             }, {
                 where: {
-                    id: idUser
+                    id: user.id
                 }
             });
+            console.log("updateUsergame", updateUsergame);
             if(!updateUsergame){
                 return res.status(404).json({
                     message: 'User Game not found'
                 });
             }
-            req.session.username = username;
             const updateUsergameBiodata = await UserGameBiodata.update({
                 first_name: first_name,
                 last_name: last_name,
@@ -115,22 +119,31 @@ module.exports = {
                 email: email
             }, {
                 where: {
-                    user_id: idUser
+                    user_id: user.id
                 }
             });
-            if(!updateUsergameBiodata){
+            console.log("updateUsergameBiodata", updateUsergameBiodata);
+            if(updateUsergameBiodata[0] === 0){
                 return res.status(404).json({
-                    message: 'User Game Biodata not found'
+                    message: 'Update UserGameBiodata Error'
                 });
             }
+            
             console.log("Update success");
-            req.flash("alertMessage", "Update profile success!");
-            req.flash("alertStatus", "success");
-            res.redirect("/");
+            if (username !== user.username) {
+                res.redirect("/logout");
+            } else {
+                req.flash("alertMessage", "Update profile success!");
+                req.flash("alertStatus", "success");
+                res.redirect("/");
+            }
+
         } catch (error) {
             req.flash("alertMessage", "Internal Server Error");
             req.flash("alertStatus", "danger");
-            res.redirect("/");
+            res.render("error", {
+                error
+            })
         }
     },
     // Endpoint: /profile/add-history
@@ -148,7 +161,9 @@ module.exports = {
         } catch (error) {
             req.flash("alertMessage", "Internal Server Error");
             req.flash("alertStatus", "danger");
-            res.redirect("/");
+            res.render("error", {
+                error
+            })
         }
     },
     // Endpoint: GET /profile/edit-history/:id
@@ -178,7 +193,9 @@ module.exports = {
         } catch (error) { 
             req.flash("alertMessage", "Internal Server Error");
             req.flash("alertStatus", "danger");
-            res.redirect("/");
+            res.render("error", {
+                error
+            })
         }
     }
 }
