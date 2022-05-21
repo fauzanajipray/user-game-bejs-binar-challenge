@@ -11,7 +11,7 @@ module.exports = {
             data.map(userGame => {
                 delete userGame.password
             });
-            res.render("layouts/usergame/index", {
+            res.render("layouts/user/usergame/index", {
                 title: "Usergames",
                 active: "user",
                 data
@@ -41,7 +41,7 @@ module.exports = {
                 req.flash("alertStatus", "warning");
                 res.redirect("/usergame");
             }
-            res.render("layouts/usergame/detail_usergame", {
+            res.render("layouts/user/usergame/detail_usergame", {
                 title: "Detail Usergame",
                 active: "user",
                 data

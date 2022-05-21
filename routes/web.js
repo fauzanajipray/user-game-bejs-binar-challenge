@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const authController = require("../controllers/web/user/authController");
+
+const authController = require("../controllers/web/authController");
 const uHomeController = require("../controllers/web/user/homeController");
 const uUserGameController = require("../controllers/web/user/userGameController");
 const uUserGameHistoryController = require("../controllers/web/user/userGameHistoryController");

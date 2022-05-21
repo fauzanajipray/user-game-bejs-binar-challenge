@@ -30,7 +30,7 @@ module.exports = {
                 }]
             });
 
-            res.render("layouts/home/index", {
+            res.render("layouts/user/home/index", {
                 title: "Home",
                 active: "home",
                 alert,
@@ -62,7 +62,7 @@ module.exports = {
                     as: 'userGameBiodata'
                 }]
             });
-            res.render("layouts/home/edit_profile", {
+            res.render("layouts/user/home/edit_profile", {
                 title: "Edit Profile",
                 active: "home",
                 alert,
@@ -153,7 +153,7 @@ module.exports = {
             const alertStatus = req.flash("alertStatus");
             const alert = { message: alertMessage, status: alertStatus };
 
-            res.render("layouts/home/add_history", {
+            res.render("layouts/user/home/add_history", {
                 title: "Add History",
                 active: "home",
                 alert,
@@ -184,7 +184,7 @@ module.exports = {
                 }]
             });
             console.log(data);
-            res.render("layouts/home/edit_history", {
+            res.render("layouts/user/home/edit_history", {
                 title: "Edit History",
                 active: "home",
                 alert,

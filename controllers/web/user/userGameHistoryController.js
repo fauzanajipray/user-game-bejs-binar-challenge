@@ -8,7 +8,7 @@ module.exports = {
             const data = userGamesHistories.map(history => 
                 history.toJSON()
             );
-            res.render("layouts/history/index", {
+            res.render("layouts/user/history/index", {
                 title: "Histories",
                 active: "history",
                 data
