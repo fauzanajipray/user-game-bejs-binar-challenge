@@ -21,10 +21,20 @@
               <table class="table table-borderless">
                 <tbody>
                   <tr>
+                    <!-- Image Profile -->
+                    <td colspan="2" class="text-center">
+                      <% if (data.userGameBiodata.url_photo != null) { %>
+                        <img src="/user/images/<%= data.userGameBiodata.url_photo %>" class="img-thumbnail mb-3" style="width: 200px; height: 200px;">
+                      <% } else { %>
+                        <img src="/images/image-user.png" class="img-thumbnail mb-3" style="width: 200px; height: 200px;">
+                      <% } %>
+                    </td>
+                  </tr>
+                  <tr>
                     <td>Name</th>
                     <td>
                       : &nbsp&nbsp&nbsp <%= data.userGameBiodata.first_name %> <%= data.userGameBiodata.last_name %> 
-                      <% if (data.role == "admin") {%>
+                      <% if (data.role_id == 1) {%>
                         <span class="h4 badge bg-primary">Admin</span>
                       <% } else {%>
                         <span class="h4 badge bg-success">User</span>

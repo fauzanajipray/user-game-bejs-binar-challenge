@@ -18,7 +18,6 @@ router.post("/history", UserGameHistoryController.store);
 router.put("/history/:id", UserGameHistoryController.update);
 router.delete("/history/:id", UserGameHistoryController.destroy);
 
-
 // Route Auth
 router.post("/login", authController.postLogin);
 

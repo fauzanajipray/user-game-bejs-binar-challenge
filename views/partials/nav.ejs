@@ -7,8 +7,10 @@
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" class="nav-link px-2 <% if(active == "home") { %> text-secondary <% } else { %> text-white <% } %>">Home</a></li>
+        <% if (user.role_id == 1) { %>
         <li><a href="/usergame" class="nav-link px-2 <% if(active == "user") { %> text-secondary <% } else { %> text-white <% } %>">User</a></li>
         <li><a href="/history" class="nav-link px-2 <% if(active == "history") { %> text-secondary <% } else { %> text-white <% } %>">History</a></li>
+        <% } %>
       </ul>
 
       <div class="text-end">

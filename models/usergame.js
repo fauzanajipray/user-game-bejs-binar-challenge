@@ -6,22 +6,27 @@ const bc = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class UserGame extends Model {
     static associate(models) {
+      //role
+      this.belongsTo(models.Role, { foreignKey: "role_id" });
       this.hasOne(models.UserGameBiodata, { foreignKey: 'id', as: 'userGameBiodata' });
       this.hasMany(models.UserGameHistory, { foreignKey: 'user_id', as: 'userGameHistories' });
     }
 
     static #encrypt = (password) => bc.hashSync(password, 10);
-    static register = async ({ username, password }) => {
+    static register = async ({ username, password, role_id }) => {
       const encryptedPassword = this.#encrypt(password);
-      return this.create({ username: username, password: encryptedPassword });
+      return this.create({ username: username, password: encryptedPassword, role_id: role_id });
     };
     checkPassword = (password) => bc.compareSync(password, this.password);
     static authenticate = async (username, password) => {
       try {
         const userGame = await this.findOne({ where: { username: username }});
-        // console.log('userGame', userGame);
-        if(!userGame) return Promise.reject('User not found')
-        if(!userGame.checkPassword(password)) return Promise.reject('Wrong password');
+        if(!userGame) {
+          return Promise.reject(new Error('User not found'));
+        }
+        if(!userGame.checkPassword(password)){
+          return Promise.reject(new Error('Password is incorrect'));
+        }
         return Promise.resolve(userGame);
       } catch (error) {
         return Promise.reject(error);
@@ -43,12 +48,13 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
-    role: {
-      type: DataTypes.STRING,
+    role_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         notEmpty: true,
-      }
+      },
+      defaultValue: 2
     },
   }, {
     sequelize,

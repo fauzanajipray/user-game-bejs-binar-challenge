@@ -11,10 +11,12 @@ module.exports = {
             data.map(userGame => {
                 delete userGame.password
             });
+            const user = req.user.toJSON();
             res.render("layouts/user/usergame/index", {
                 title: "Usergames",
                 active: "user",
-                data
+                data,
+                user
             })
         } catch (error) {
             res.render("error", { error });
@@ -24,6 +26,7 @@ module.exports = {
     viewDetailUserGame: async (req, res) => {
         try {
             const { id } = req.params;
+            const user = req.user.toJSON();
             const data = await UserGame.findOne({
                 where: {
                     id: id
@@ -44,6 +47,7 @@ module.exports = {
             res.render("layouts/user/usergame/detail_usergame", {
                 title: "Detail Usergame",
                 active: "user",
+                user,
                 data
             })
         } catch (error) {
@@ -52,4 +56,9 @@ module.exports = {
             res.redirect("/usergame");
         }
     },
+
+    // Endpoint PUT /usergame/:id/edit
+    viewUpdateUsergame: async (req, res) => {},
+    updateUserGame: async (req, res) => {},
+    deleteUserGame: async (req, res) => {},
 }

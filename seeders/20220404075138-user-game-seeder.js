@@ -9,16 +9,16 @@ module.exports = {
     const data = [];
     for (let i = 0; i < 5; i++) {
       let username = faker.internet.userName();
-      let password = faker.internet.password();
+      let password = bc.hashSync('12345678', 10);
       let date_now = new Date(Date.now() + i * 60000);
       data.push({
         username: username,
         password: password,
+        role_id: 2,
         created_at: date_now,
         updated_at: date_now,
       })
     }
-    console.log(data);
     const data2 = await queryInterface.bulkInsert('user_games', data, {});
   },
 

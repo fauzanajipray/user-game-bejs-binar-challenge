@@ -9,6 +9,7 @@ module.exports = {
             const alertMessage = req.flash("alertMessage");
             const alertStatus = req.flash("alertStatus");
             const alert = { message: alertMessage, status: alertStatus };
+            // console.log(req.flash);
       
             if (req.session.user == null || req.session.user == undefined) {
               res.render("layouts/auth/view_login", {
@@ -19,44 +20,58 @@ module.exports = {
               res.redirect("/");
             }
         } catch (error) {
-            res.redirect("/");
+            res.render("error", {
+                error
+            })
         }
     },
 
     // Endpoint POST /login
-    postLogin: passport.authenticate('local', {
-      successRedirect: '/',
-      failureRedirect: '/login',
-      failureFlash: true,
-    }),
-    postLogin2: async (req, res) => {
-      try {
-        const { username, password } = req.body;
-        const userGame = await UserGame.findOne({ where: { username: username }});
-        if(!userGame) {
-          req.flash("alertMessage", "Username not found!");
-          req.flash("alertStatus", "danger");
-          res.redirect("/login");
+    
+    postLogin: async (req, res) => {
+        try { 
+            const user = req.user.toJSON();
+            console.log(user);
+            // if (user.role_id === 1) {
+            //     console.log("Admin Login");
+            //     res.redirect("/admin");
+            // } 
+            console.log("User Login");
+            res.redirect("/");
+        } catch (error) {
+            req.flash("alertMessage", "Internal Server Error");
+            req.flash("alertStatus", "danger");
+            res.redirect("/");
         }
-        const isPasswordMatch = (password) => {
-          return userGame.password === password;
-        }
-
-        if(!isPasswordMatch(password)) {
-          req.flash("alertMessage", "Password not match!");
-          req.flash("alertStatus", "danger");
-          res.redirect("/login");
-        }
-        req.session.user = {
-          id: userGame.id,
-          username: userGame.username,
-        };
-        res.redirect("/");
-      } catch (error) {
-        req.flash("alertMessage", "Something wrong!");
-        res.redirect("/login");
-      }
     },
+    // postLogin2: async (req, res) => {
+    //   try {
+    //     const { username, password } = req.body;
+    //     const userGame = await UserGame.findOne({ where: { username: username }});
+    //     if(!userGame) {
+    //       req.flash("alertMessage", "Username not found!");
+    //       req.flash("alertStatus", "danger");
+    //       res.redirect("/login");
+    //     }
+    //     const isPasswordMatch = (password) => {
+    //       return userGame.password === password;
+    //     }
+
+    //     if(!isPasswordMatch(password)) {
+    //       req.flash("alertMessage", "Password not match!");
+    //       req.flash("alertStatus", "danger");
+    //       res.redirect("/login");
+    //     }
+    //     req.session.user = {
+    //       id: userGame.id,
+    //       username: userGame.username,
+    //     };
+    //     res.redirect("/");
+    //   } catch (error) {
+    //     req.flash("alertMessage", "Something wrong!");
+    //     res.redirect("/login");
+    //   }
+    // },
     // Endpoint GET /logout
     // getLogout: passport
     getLogout: async (req, res) => {
@@ -100,8 +115,9 @@ module.exports = {
         const newUserGame = await UserGame.register({
           username: username,
           password: password,
+          role_id: 2,
         })
-        console.log(newUserGame);
+        console.log("newUserGame :" + newUserGame);
         if (newUserGame) {
           const newUserGameBiodata = await UserGameBiodata.create({
             user_id: newUserGame.id,
@@ -128,7 +144,9 @@ module.exports = {
         } else {
           req.flash("alertMessage", "Something wrong!");
           req.flash("alertStatus", "danger");
-          res.redirect("/register");
+          res.render("error", {
+            error: error,
+          });
         }
       }
     },

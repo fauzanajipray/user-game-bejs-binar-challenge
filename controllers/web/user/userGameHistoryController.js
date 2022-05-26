@@ -8,9 +8,11 @@ module.exports = {
             const data = userGamesHistories.map(history => 
                 history.toJSON()
             );
+            const user = req.user.toJSON();
             res.render("layouts/user/history/index", {
                 title: "Histories",
                 active: "history",
+                user,
                 data
             })
         } catch (error) {

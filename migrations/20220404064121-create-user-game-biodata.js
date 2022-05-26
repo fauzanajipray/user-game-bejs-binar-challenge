@@ -21,6 +21,14 @@ module.exports = {
       email: {
         type: Sequelize.STRING
       },
+      url_photo: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      url_video: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       user_id: {
         type: Sequelize.INTEGER,
         references: {

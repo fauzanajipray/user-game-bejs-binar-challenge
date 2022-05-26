@@ -29,7 +29,7 @@ app.use(passport.session());
 app.use(flash());
 
 app.use(methodOverride("_method"));
-app.use(upload.any());
+// app.use(upload.any());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

@@ -11,7 +11,7 @@
         <% } %>
         <div class="card mb-3 mt-3">
             <div class="card-body">
-                <form action="/profile/update?_method=PUT" method="POST">
+                <form action="/profile/update?_method=PUT" method="POST" enctype="multipart/form-data">
                     <table class="table table-borderless">
                       <tbody>
                         <tr>
@@ -37,6 +37,17 @@
                           <td>Address</th>
                           <td><input type="text" name="address" value="<%= data.userGameBiodata.address %>" class="form-control"></td>
                         </tr>
+                        <tr>
+                          <td>Image</td>
+                          <td>
+                            <% if (data.userGameBiodata.url_photo != null) { %>
+                              <img src="/user/images/<%= data.userGameBiodata.url_photo %>" alt="<%= data.username %>" width="200" id="imgPreview" class="img-thumbnail m-2">
+                            <% } %>
+                            <img src="" alt="<%= data.username %>" width="200" id="imgPreview" class="img-thumbnail m-2" style="display:none;">
+                            <input type="file" class="form-control-file" id="image" name="image" accept="image/x-png,image/gif,image/jpeg" onchange="showPreview(event);">
+                            
+                          </td>
+                        </tr>
                       </tbody>
                     </table>
                     <div class="d-flex justify-content-end">
@@ -53,5 +64,14 @@
         <hr class="my-4">
     </div>
 </div>
-
+<script type="text/javascript">
+  function showPreview(event){
+      if(event.target.files.length > 0){
+          var src = URL.createObjectURL(event.target.files[0]);
+          var preview = document.getElementById('imgPreview');
+          preview.src = src;
+          preview.style.display = "block";
+      }s
+  }
+</script>
 <%- include("../../../partials/footer.ejs") %> 

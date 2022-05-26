@@ -15,11 +15,10 @@ module.exports = {
                 status2: alertStatusHistory
             };
 
-            const { id } = req.user.toJSON();
-            console.log(req.user.toJSON());
+            const user = req.user.toJSON();
             const data = await UserGame.findOne({
                 where: {
-                    id: id
+                    id: user.id
                 },
                 include: [{
                     model: UserGameBiodata,
@@ -34,6 +33,7 @@ module.exports = {
                 title: "Home",
                 active: "home",
                 alert,
+                user,
                 data
             })
         } catch (error) {
@@ -52,10 +52,10 @@ module.exports = {
             const alertStatus = req.flash("alertStatus");
             const alert = { message: alertMessage, status: alertStatus };
 
-            const { id } = req.user.toJSON();
+            const user = req.user.toJSON();
             const data = await UserGame.findOne({
                 where: {
-                    id: id
+                    id: user.id
                 },
                 include: [{
                     model: UserGameBiodata,
@@ -66,6 +66,7 @@ module.exports = {
                 title: "Edit Profile",
                 active: "home",
                 alert,
+                user,
                 data
             })
         } catch (error) {
@@ -86,7 +87,8 @@ module.exports = {
                 email,
                 first_name,
                 last_name,
-                address, } = req.body;
+                address
+            } = req.body;
             if (username !== usernameSession) {
                 const checkUsername = await UserGame.findOne({
                     where: {
@@ -116,20 +118,19 @@ module.exports = {
                 first_name: first_name,
                 last_name: last_name,
                 address: address,
-                email: email
+                email: email,
+                url_photo: req.file.filename
             }, {
                 where: {
                     user_id: user.id
                 }
             });
-            console.log("updateUsergameBiodata", updateUsergameBiodata);
             if(updateUsergameBiodata[0] === 0){
                 return res.status(404).json({
                     message: 'Update UserGameBiodata Error'
                 });
             }
             
-            console.log("Update success");
             if (username !== user.username) {
                 res.redirect("/logout");
             } else {
@@ -152,11 +153,13 @@ module.exports = {
             const alertMessage = req.flash("alertMessage");
             const alertStatus = req.flash("alertStatus");
             const alert = { message: alertMessage, status: alertStatus };
-
+            
+            const user = req.user.toJSON();
             res.render("layouts/user/home/add_history", {
                 title: "Add History",
                 active: "home",
                 alert,
+                user
             })
         } catch (error) {
             req.flash("alertMessage", "Internal Server Error");
@@ -174,6 +177,7 @@ module.exports = {
             const alert = { message: alertMessage, status: alertStatus };
 
             const idHistory = req.params.id;
+            const user = req.user.toJSON();
             const data = await UserGameHistory.findOne({
                 where: {
                     id: idHistory
@@ -188,7 +192,8 @@ module.exports = {
                 title: "Edit History",
                 active: "home",
                 alert,
-                data
+                user,
+                data,
             })
         } catch (error) { 
             req.flash("alertMessage", "Internal Server Error");
