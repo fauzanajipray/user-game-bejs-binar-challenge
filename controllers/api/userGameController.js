@@ -1,4 +1,5 @@
 const { UserGame, UserGameBiodata, UserGameHistory } = require('../../models');
+const response = require('../../utils/formatResponse');
 
 module.exports = {
     // Endpoint GET /usergame
@@ -13,21 +14,15 @@ module.exports = {
             data.map(userGame => {
                 delete userGame.password;
             });
-            res.status(200).json({
-                message: 'Success',
-                data: data
-            })
+            return response(res, 200, true, 'Success', data);
         } catch (error) {
-            res.status(500).json({
-                message: error.message
-            });
+            return response(res, 500, false, "Internal Server Error", null);
         }
     },
     // Endpoint GET /usergame/:id
     show: async (req, res) => {
         try {
             const { id } = req.params;
-            
             const userGame = await UserGame.findOne({
                 where: {
                     id: id
@@ -41,14 +36,9 @@ module.exports = {
                 }]
             });
             if (!userGame) {
-                return res.status(404).json({
-                    message: 'User Game not found'
-                });
+                return response(res, 404, false, 'UserGame not found', null);
             }
-            res.status(200).json({
-                message: 'Success',
-                data: userGame.toJSON()
-            });
+            return response(res, 200, true, 'Success', userGame);
         } catch (error) {
             res.status(500).json({
                 message: error.message

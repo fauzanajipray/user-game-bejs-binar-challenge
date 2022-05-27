@@ -13,7 +13,6 @@ const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 
-// view setup
 app.set("view engine", "ejs");
 app.use(
     session({
@@ -23,6 +22,7 @@ app.use(
       cookie: { maxAge: 3600000 },
     })
 );
+
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -34,6 +34,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+
 
 // Router
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));
