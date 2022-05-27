@@ -30,8 +30,8 @@ router.get("/profile/edit-history/:id", homeController.viewEditHistory);
 router.get("/usergame",  isAdmin, userGameController.index);
 router.get("/usergame/:id",  isAdmin, userGameController.viewDetailUserGame);
 router.get("/usergame/:id/edit",  isAdmin, userGameController.viewUpdateUsergame);
-// router.put("/usergame/:id/edit",  isAdmin, userGameController.updateUserGame);
-// router.delete("/usergame/:id/delete",  isAdmin, userGameController.deleteUserGame);
+router.put("/usergame/:id/edit",  isAdmin, uploudSingle, userGameController.updateUserGame);
+router.delete("/usergame/:id/delete",  isAdmin, userGameController.deleteUserGame);
 // Route UserGameHistory
 router.post("/history", userGameHistoryController.store);
 router.get("/history",  isAdmin, userGameHistoryController.index);

@@ -4,6 +4,11 @@
 <div class="container">
     <div class="mt-2">
         <h1 class="display-4 mb">All Usergames</h1>
+        <% if (alert.message != "") {%>
+          <div class="alert alert-<%= alert.status%>" role="alert">
+            <%= alert.message %>
+          </div>
+        <% } %>
         <div class="card mb-3 mt-3">
           <div class="card-body">
             <table class="table">
@@ -27,15 +32,18 @@
                     <td><%= user.username %></td>
                     <td><%= user.createdAt %></td>
                     <td>
-                      <a href="/usergame/<%= user.id %>" class="btn btn-primary btn-sm">
-                        <li class="fas fa-eye"></li>
-                        Detail</a>
-                      <a href="/usergame/<%= user.id %>/edit" class="btn btn-warning btn-sm">
-                        <li class="fas fa-edit"></li>
-                        Edit</a>
-                      <a href="/usergame/<%= user.id %>/delete" class="btn btn-danger btn-sm">
-                        <li class="fas fa-trash"></li>
-                        Delete</a>
+                      <form action="/usergame/<%= user.id %>/delete?_method=DELETE" method="post">
+                        <a href="/usergame/<%= user.id %>" class="btn btn-primary btn-sm">
+                          <li class="fas fa-eye"></li>
+                          Detail</a>
+                        <a href="/usergame/<%= user.id %>/edit" class="btn btn-warning btn-sm">
+                          <li class="fas fa-edit"></li>
+                          Edit</a>
+                        <button type="submit" class="btn btn-danger btn-sm" style="max-height: 35px;">
+                          <li class="fas fa-trash"></li>
+                              Delete
+                        </button>
+                      </form>
                     </td>
                   </tr>
                 <% })} %> 

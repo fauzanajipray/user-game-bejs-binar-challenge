@@ -16,6 +16,7 @@ module.exports = {
             };
 
             const user = req.user.toJSON();
+            console.log(user);
             const data = await UserGame.findOne({
                 where: {
                     id: user.id
@@ -89,6 +90,7 @@ module.exports = {
                 last_name,
                 address
             } = req.body;
+            console.log(req.body.first_name);
             if (username !== usernameSession) {
                 const checkUsername = await UserGame.findOne({
                     where: {
@@ -114,17 +116,26 @@ module.exports = {
                     message: 'User Game not found'
                 });
             }
-            const updateUsergameBiodata = await UserGameBiodata.update({
-                first_name: first_name,
-                last_name: last_name,
-                address: address,
-                email: email,
-                url_photo: req.file.filename
-            }, {
-                where: {
-                    user_id: user.id
+            const filename = req.file ? req.file.filename : null;
+            let dataBiodata
+
+            if (filename) {
+                dataBiodata = {
+                    first_name: first_name,
+                    last_name: last_name,
+                    address: address,
+                    email: email,
+                    url_photo: req.file.filename
                 }
-            });
+            } else {
+                dataBiodata = {
+                    first_name: first_name,
+                    last_name: last_name,
+                    address: address,
+                    email: email,
+                }
+            }
+            const updateUsergameBiodata = await UserGameBiodata.update(dataBiodata, { where: { user_id: user.id }});
             if(updateUsergameBiodata[0] === 0){
                 return res.status(404).json({
                     message: 'Update UserGameBiodata Error'
