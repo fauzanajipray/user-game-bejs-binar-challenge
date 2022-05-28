@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       this.hasOne(models.UserGameBiodata, { foreignKey: 'id', as: 'userGameBiodata' });
       this.hasMany(models.UserGameHistory, { foreignKey: 'user_id', as: 'userGameHistories' });
     }
-
     static #encrypt = (password) => bc.hashSync(password, 10);
     static register = async ({ username, password, role_id }) => {
       const encryptedPassword = this.#encrypt(password);
@@ -38,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         id: this.id,
         username: this.username,
         role_id: this.role_id
-      }, 'secretkey', { expiresIn: '1h' });
+      }, 'secretkey', { expiresIn: '5h' });
       return token;
     }
   }

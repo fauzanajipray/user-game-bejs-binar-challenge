@@ -19,6 +19,8 @@ module.exports = {
         updated_at: date_now,
       })
     }
+    data[0].username = 'admin';
+    data[0].role_id = 1;
     const data2 = await queryInterface.bulkInsert('user_games', data, {});
   },
 
