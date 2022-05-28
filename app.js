@@ -6,13 +6,13 @@ const webRouter = require('./routes/web');
 const multer = require('multer')
 var path = require("path");
 const upload = multer();
+const passport = require('passport');
 const swaggerJSON = require('./swagger.json');
 const swaggerUI = require('swagger-ui-express');
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
 
-// view setup
 app.set("view engine", "ejs");
 app.use(
     session({
@@ -22,14 +22,19 @@ app.use(
       cookie: { maxAge: 3600000 },
     })
 );
+
+
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 app.use(methodOverride("_method"));
-app.use(upload.any());
+// app.use(upload.any());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
+
 
 // Router
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));

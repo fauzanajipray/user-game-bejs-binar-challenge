@@ -1,0 +1,77 @@
+<%- include("../../../partials/header.ejs") %> 
+<%- include("../../../partials/nav.ejs") %> 
+
+<div class="container">
+    <div class="mt-2">
+        <h2 class="display-4 mb">Edit Profile</h2>
+        <% if (alert.message != "") {%>
+          <div class="alert alert-<%= alert.status%>" role="alert">
+            <%= alert.message %>
+          </div>
+        <% } %>
+        <div class="card mb-3 mt-3">
+            <div class="card-body">
+                <form action="/profile/update?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr>
+                          <td>Name</th>
+                          <td class="row">
+                              <div class="col-md-6">
+                                  <input type="text" name="first_name" value="<%= data.userGameBiodata.first_name %>" class="form-control">
+                              </div>
+                              <div class="col-md-6">
+                                  <input type="text" name="last_name" value="<%= data.userGameBiodata.last_name %>" class="form-control">
+                              </div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Username</th>
+                          <td><input type="text" name="username" value="<%= data.username %>" class="form-control"></td>
+                        </tr>
+                        <tr>
+                          <td>Email</th>
+                          <td><input type="email" name="email" value="<%= data.userGameBiodata.email %>" class="form-control"></td>
+                        </tr>
+                        <tr>
+                          <td>Address</th>
+                          <td><input type="text" name="address" value="<%= data.userGameBiodata.address %>" class="form-control"></td>
+                        </tr>
+                        <tr>
+                          <td>Image</td>
+                          <td>
+                            <% if (data.userGameBiodata.url_photo != null) { %>
+                              <img src="/user/images/<%= data.userGameBiodata.url_photo %>" alt="<%= data.username %>" width="200" id="imgPreview" class="img-thumbnail m-2">
+                            <% } %>
+                            <img src="" alt="<%= data.username %>" width="200" id="imgPreview" class="img-thumbnail m-2" style="display:none;">
+                            <input type="file" class="form-control-file" id="image" name="image" accept="image/x-png,image/gif,image/jpeg" onchange="showPreview(event);">
+                            
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="d-flex justify-content-end">
+                        <a href="/" class="btn btn-danger m-2">
+                            <li class="fas fa-edit"></li>
+                            Cancel</a>
+                        <button type="submit" class="btn btn-primary m-2">
+                          <li class="fas fa-edit"></li>
+                          Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <hr class="my-4">
+    </div>
+</div>
+<script type="text/javascript">
+  function showPreview(event){
+      if(event.target.files.length > 0){
+          var src = URL.createObjectURL(event.target.files[0]);
+          var preview = document.getElementById('imgPreview');
+          preview.src = src;
+          preview.style.display = "block";
+      }s
+  }
+</script>
+<%- include("../../../partials/footer.ejs") %> 
