@@ -14,12 +14,12 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "vxjrtjoturewis",
-    "password": "97c2b3124eb4c1b01dca19a0f5342e6bde2594e1a21120f45a51d363aeed27da",
-    "database": "dd00o0j75cja5g",
+    "username": "pfzqxocydqvswt",
+    "password": "13db1dc4371c19e7c780bec629b40da515c49865049e82f5055e01e470505946",
+    "database": "d3juovg27i85ot",
     "host": "ec2-52-4-104-184.compute-1.amazonaws.com",
     "port": 5432,
-    "url": "postgres://vxjrtjoturewis:97c2b3124eb4c1b01dca19a0f5342e6bde2594e1a21120f45a51d363aeed27da@ec2-52-4-104-184.compute-1.amazonaws.com:5432/dd00o0j75cja5g",
+    "url": "postgres://pfzqxocydqvswt:13db1dc4371c19e7c780bec629b40da515c49865049e82f5055e01e470505946@ec2-52-4-104-184.compute-1.amazonaws.com:5432/d3juovg27i85ot",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": { 
