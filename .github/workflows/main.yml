@@ -16,11 +16,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Install sequlize-cli
-        run: npm install sequelize-cli
-      - name: Drop DB
-        run: sequelize db:drop --env production
-      - name: Create DB
-        run: sequelize db:create --env production
+        run: npm install sequelize-cl
       - name: Migrate DB
         run: npx sequelize db:migrate --env production
       - name: Seeding DB
