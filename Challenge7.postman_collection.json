@@ -1,0 +1,558 @@
+{
+	"info": {
+		"_postman_id": "cda4c6bd-436c-4b46-872a-a9862e44da24",
+		"name": "Challenge4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "januzanj",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "januzanj2",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Janu",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Yoga",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Usergames",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/usergame",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"usergame"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Histories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/history",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usergame",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "janjisuci.Sus",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/usergame/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"usergame",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usergame",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "Gino123",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/usergame/9",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"usergame",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Biodata by Usergame",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "fauzanjr1@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Fauzan",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Aji",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/usergame/4/biodata",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"usergame",
+								"4",
+								"biodata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usergames Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/usergame",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"usergame"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJqYW51emFuaiIsInJvbGVfaWQiOjEsImlhdCI6MTY1MzczNTU0MywiZXhwIjoxNjUzNzUzNTQzfQ.99DfcCrY8GX5x2vIpeRRle3ByJWMOA-_VeuA5Vk_Y_M",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/profile",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Biodata",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/profile/biodata",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"biodata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Biodata",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "fauzanjr111@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "Janu",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Aji",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "884 Lemuel Row",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/fauzan/Pictures/40b.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/profile/biodata",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"biodata"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Histories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/profile/history",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/profile/history/16",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"history",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/api/profile/history/15",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"history",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "score",
+									"value": "70",
+									"type": "text"
+								},
+								{
+									"key": "time_played",
+									"value": "600000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/profile/history/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"history",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "score",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "time_played",
+									"value": "1200000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/profile/history",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"profile",
+								"history"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJqYW51emFuaiIsInJvbGVfaWQiOjEsImlhdCI6MTY1Mzc0MzkwMywiZXhwIjoxNjUzNzYxOTAzfQ.YgijzNTq30DXWz1yodgQZMiQKei1tZUm_fhFb5H6Qio",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.globals.set(\"server\", \"localhost:3000\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
