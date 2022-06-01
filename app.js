@@ -13,6 +13,9 @@ const swaggerUI = require('swagger-ui-express');
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
+const config = require('./config/config');
+
+console.log(config);
 
 app.set("view engine", "ejs");
 app.use(
