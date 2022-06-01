@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -34,7 +35,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
 
 // Router
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));

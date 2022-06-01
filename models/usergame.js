@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
         id: this.id,
         username: this.username,
         role_id: this.role_id
-      }, 'secretkey', { expiresIn: '5h' });
+      }, process.env.JWT_SECRET, { expiresIn: '5h' });
       return token;
     }
   }
