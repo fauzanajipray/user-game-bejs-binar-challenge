@@ -1,4 +1,4 @@
-const { UserGame, UserGameBiodata } = require('../../models');
+const { UserGame, UserGameBiodata } = require('../../db/models');
 const emailTransporter = require('../../lib/email');
 const response = require('../../utils/formatResponse');
 

@@ -1,4 +1,4 @@
-const { UserGame, UserGameBiodata } = require('../../models');
+const { UserGame, UserGameBiodata } = require('../../db/models');
 
 const passport = require('../../lib/passport-local');
 const jwt = require('jsonwebtoken');
