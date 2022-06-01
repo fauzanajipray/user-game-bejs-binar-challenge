@@ -13,9 +13,6 @@ const swaggerUI = require('swagger-ui-express');
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
-const config = require('./config/config');
-
-console.log(config);
 
 app.set("view engine", "ejs");
 app.use(
@@ -26,8 +23,6 @@ app.use(
       cookie: { maxAge: 3600000 },
     })
 );
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
