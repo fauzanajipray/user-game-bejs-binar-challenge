@@ -1,4 +1,4 @@
-const { UserGameHistory } = require('../../../models');
+const { UserGameHistory } = require('../../../db/models');
 
 module.exports = {
     // Endpoint GET /history

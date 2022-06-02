@@ -19,7 +19,9 @@ module.exports = {
         allowNull: true,
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       url_photo: {
         type: Sequelize.STRING,

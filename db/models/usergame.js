@@ -2,6 +2,7 @@
 const { Model } = require('sequelize');
 
 const bc = require('bcrypt');
+const encrypt = require('../../utils/encrypt');
 const jwt = require('jsonwebtoken');
 
 module.exports = (sequelize, DataTypes) => {
@@ -11,10 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Role, { foreignKey: "role_id" });
       this.hasOne(models.UserGameBiodata, { foreignKey: 'id', as: 'userGameBiodata' });
       this.hasMany(models.UserGameHistory, { foreignKey: 'user_id', as: 'userGameHistories' });
+      this.hasOne(models.Otp, { foreignKey: 'user_id', as: 'otp' });
     }
     static #encrypt = (password) => bc.hashSync(password, 10);
     static register = async ({ username, password, role_id }) => {
-      const encryptedPassword = this.#encrypt(password);
+      const encryptedPassword = encrypt(password);
       return this.create({ username: username, password: encryptedPassword, role_id: role_id });
     };
     checkPassword = (password) => bc.compareSync(password, this.password);
@@ -37,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         id: this.id,
         username: this.username,
         role_id: this.role_id
-      }, 'secretkey', { expiresIn: '5h' });
+      }, process.env.JWT_SECRET, { expiresIn: '5h' });
       return token;
     }
   }
