@@ -21,7 +21,7 @@ module.exports = {
         host: process.env.PROD_DB_HOSTNAME,
         port: parseInt(process.env.PROD_DB_PORT),
         url: `${process.env.PROD_DB_DIALECT}://${process.env.PROD_DB_USERNAME}:${process.env.PROD_DB_PASSWORD}@${process.env.PROD_DB_HOSTNAME}:${process.env.PROD_DB_PORT}/${process.env.PROD_DB_NAME}`,
-        dialect: process.env.PROD_DB_DIALECT,
+        dialect: "postgres",
         dialectOptions: {
           ssl: { 
             require: true,
