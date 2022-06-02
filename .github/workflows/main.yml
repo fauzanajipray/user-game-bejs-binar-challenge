@@ -16,8 +16,6 @@ jobs:
           node-version: "14.x"
       - name: Install dependencies
         run: npm install
-      - name: Install sequlize-cli
-        run: npm install sequelize-cli
       - name: Add .env file
         run: |
           touch .env
@@ -27,6 +25,8 @@ jobs:
           echo PROD_DB_HOSTNAME=${{secrets.DB_HOST}} >> .env
           echo PROD_DB_PORT=${{secrets.DB_PORT}} >> .env
           echo PROD_DB_DIALECT=${{secrets.DB_DIALECT}} >> .env
+      - name: Install sequlize-cli
+        run: npm install sequelize-cli
       - name: Migrate DB
         run: npx sequelize db:migrate --env production
       - name: Seeding DB
