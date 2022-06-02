@@ -6,7 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -17,6 +16,16 @@ jobs:
         run: npm install
       - name: Install sequlize-cli
         run: npm install sequelize-cli
+  
+  setup-database:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v2
+        with: 
+          node-version: "14.x"
       - name: Migrate DB
         run: npx sequelize db:migrate --env production
       - name: Seeding DB
@@ -26,7 +35,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [ setup-database ]
     env: 
       ENV_VARIABLE: PROD
     steps:
