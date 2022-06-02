@@ -16,13 +16,15 @@ jobs:
           node-version: "14.x"
       - name: Install dependencies
         run: npm install
+      - name: See secrets
+        run: echo ${{ secrets.DB_USERNAME }}
       - name: Add .env file
         run: |
           touch .env
           echo PROD_DB_USERNAME=${{secrets.DB_USERNAME}} >> .env
           echo PROD_DB_PASSWORD=${{secrets.DB_PASSWORD}} >> .env
           echo PROD_DB_NAME=${{secrets.DB_NAME}} >> .env
-          echo PROD_DB_HOSTNAME=${{secrets.DB_HOST}} >> .env
+          echo PROD_DB_HOSTNAME=${{secrets.DB_HOSTNAME}} >> .env
           echo PROD_DB_PORT=${{secrets.DB_PORT}} >> .env
           echo PROD_DB_DIALECT=${{secrets.DB_DIALECT}} >> .env
           cat .env
