@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
@@ -22,19 +23,15 @@ app.use(
       cookie: { maxAge: 3600000 },
     })
 );
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
 app.use(methodOverride("_method"));
-// app.use(upload.any());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
-
 
 // Router
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));

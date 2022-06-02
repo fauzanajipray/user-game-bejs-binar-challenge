@@ -18,6 +18,10 @@ router.post("/login", passport.authenticate('local', {failureRedirect: '/login',
 router.get("/register", authController.viewRegister);
 router.post("/register", authController.postRegister);
 router.get("/logout", auth, authController.getLogout);
+router.get("/forgot-password", authController.viewForgotPassword);
+router.post("/forgot-password", authController.postForgotPassword);
+router.get("/reset-password", authController.viewResetPassword);
+router.post("/reset-password", authController.postResetPassword);
 
 router.use(auth);
 // Route Home

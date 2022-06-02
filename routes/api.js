@@ -12,6 +12,8 @@ const {uploudSingle} = require("../middlewares/multer");
 // Route Auth
 router.post("/login", authController.postLogin);
 router.post("/register", authController.postRegister);
+router.post("/forgot-password", authController.postForgotPassword);
+router.post("/reset-password", authController.postResetPassword);
 
 // Route Only Admin
 router.get("/usergame", auth, isAdmin, adminController.getUsergames);
