@@ -11,27 +11,18 @@ module.exports = {
             const userGame = await UserGame.findOne({ where: { username: username }})
 
             if(!userGame) {
-                return res.status(404).json({
-                    message: 'User Game not found'
-                })
+                return response(res, 400, false, 'Username not found', null)
             }
             if(!userGame.checkPassword(password)) {
-                return res.status(400).json({
-                    message: 'Password not match'
-                })
+                return response(res, 400, false, 'Password is incorrect', null)
             }
-            return res.status(200).json({
-                message: 'Success',
-                data: {
-                    data: userGame,
-                    token: userGame.generateToken()
-                }
+            return response(res, 200, true, 'Login success', {
+                data: userGame,
+                token: userGame.generateToken()
             })
         } catch (error) {
             console.log(error)
-            res.status(500).json({
-                message: error.message
-            })
+            return response(res, 500, false, error.message, null)
         }
     },
     // Endpoint POST /register
@@ -79,6 +70,7 @@ module.exports = {
                     emailTransporter.sendMail(mailOptions, (err, info) => {
                         if (err) {
                             console.log(err)
+                            return response(res, 500, false, err.message, null)
                         } else {
                             console.log(info)
                         }
@@ -120,7 +112,7 @@ module.exports = {
                     }]   
                 })
                 if (!userGameBiodata) {
-                    return res.status(404).json({ message: 'Email not found' })
+                    return response(res, false, 400, 'Email not found', null)
                 }
                 classUserGame = userGameBiodata.userGame
             } else {
@@ -210,7 +202,7 @@ module.exports = {
                         ]
                     }]   
                 })
-                if (!userGameBiodata) { return res.status(404).json({ message: 'Email not found' }) }
+                if (!userGameBiodata) { return response(res, 404, false, 'Email not found', null) }
                 classUserGame = userGameBiodata.userGame
             } else {
                 const userGame = await UserGame.findOne({
