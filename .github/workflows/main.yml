@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-      ENV_VARIABLE: PROD
+      environment: PROD
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -17,16 +17,16 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: See secrets
-        run: echo ${{ secrets.DB_USERNAME }}
+        run: echo ${{ env.DB_USERNAME }}
       - name: Add .env file
         run: |
           touch .env
-          echo PROD_DB_USERNAME=${{secrets.DB_USERNAME}} >> .env
-          echo PROD_DB_PASSWORD=${{secrets.DB_PASSWORD}} >> .env
-          echo PROD_DB_NAME=${{secrets.DB_NAME}} >> .env
-          echo PROD_DB_HOSTNAME=${{secrets.DB_HOSTNAME}} >> .env
-          echo PROD_DB_PORT=${{secrets.DB_PORT}} >> .env
-          echo PROD_DB_DIALECT=${{secrets.DB_DIALECT}} >> .env
+          echo PROD_DB_USERNAME=${{env.DB_USERNAME}} >> .env
+          echo PROD_DB_PASSWORD=${{env.DB_PASSWORD}} >> .env
+          echo PROD_DB_NAME=${{env.DB_NAME}} >> .env
+          echo PROD_DB_HOSTNAME=${{env.DB_HOSTNAME}} >> .env
+          echo PROD_DB_PORT=${{env.DB_PORT}} >> .env
+          echo PROD_DB_DIALECT=${{env.DB_DIALECT}} >> .env
           cat .env
       - name: Install sequlize-cli
         run: npm install sequelize-cli
