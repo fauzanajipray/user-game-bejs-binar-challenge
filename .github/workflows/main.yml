@@ -25,6 +25,7 @@ jobs:
           echo PROD_DB_HOSTNAME=${{secrets.DB_HOST}} >> .env
           echo PROD_DB_PORT=${{secrets.DB_PORT}} >> .env
           echo PROD_DB_DIALECT=${{secrets.DB_DIALECT}} >> .env
+          cat .env
       - name: Install sequlize-cli
         run: npm install sequelize-cli
       - name: Migrate DB
