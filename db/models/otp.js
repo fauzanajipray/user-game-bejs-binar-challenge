@@ -1,8 +1,9 @@
 'use strict';
-const { Model } = require('sequelize');
-
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class UserGameHistory extends Model {
+  class Otp extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -12,21 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.UserGame, { foreignKey: 'user_id', as: 'userGame' });
     }
   }
-  UserGameHistory.init({
-    score: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
-    },
-    time_played: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        notEmpty: true
-      }
-    },
+  Otp.init({
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -35,11 +22,33 @@ module.exports = (sequelize, DataTypes) => {
         isInt: true
       }
     },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isEmail: true
+      }
+    },
+    otp: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    },
+    expire_in: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
+    }
   }, {
     sequelize,
-    tableName: 'user_game_histories',
-    modelName: 'UserGameHistory',
+    modelName: 'Otp',
+    tableName: 'otps',
     underscored: true,
   });
-  return UserGameHistory;
+  return Otp;
 };

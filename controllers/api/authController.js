@@ -1,23 +1,24 @@
-const { UserGame, UserGameBiodata } = require('../../db/models');
-const emailTransporter = require('../../lib/email');
-const response = require('../../utils/formatResponse');
+const { UserGame, UserGameBiodata, Otp } = require('../../db/models')
+const emailTransporter = require('../../lib/email')
+const response = require('../../utils/formatResponse')
+const encrypt = require('../../utils/encrypt')
 
 module.exports = {
     // Endpoint POST /login
     postLogin: async (req, res) => {
         try {
-            const { username, password } = req.body;
-            const userGame = await UserGame.findOne({ where: { username: username }});
+            const { username, password } = req.body
+            const userGame = await UserGame.findOne({ where: { username: username }})
 
-            if(!userGame) {;
+            if(!userGame) {
                 return res.status(404).json({
                     message: 'User Game not found'
-                });
+                })
             }
             if(!userGame.checkPassword(password)) {
                 return res.status(400).json({
                     message: 'Password not match'
-                });
+                })
             }
             return res.status(200).json({
                 message: 'Success',
@@ -25,12 +26,12 @@ module.exports = {
                     data: userGame,
                     token: userGame.generateToken()
                 }
-            });
+            })
         } catch (error) {
-            console.log(error);
+            console.log(error)
             res.status(500).json({
                 message: error.message
-            });
+            })
         }
     },
     // Endpoint POST /register
@@ -43,7 +44,7 @@ module.exports = {
                 first_name,
                 last_name,
                 address,
-            } = req.body;                                                                                                                                                           
+            } = req.body                                                                                                                                                          
             const userGame = await UserGame.register({
                 username: username,
                 password: password,
@@ -56,7 +57,7 @@ module.exports = {
                     address,
                     email,
                     user_id: userGame.id,
-                });
+                })
                 if (userGameBiodata) {
                     const mailOptions = {
                         from: process.env.EMAIL_USER,
@@ -74,71 +75,93 @@ module.exports = {
                                     <p>Welcome to Game State, ${first_name} ${last_name}, date ${new Date()}</p>
                                 </body>
                                 </html>`
-                    };
+                    }
                     emailTransporter.sendMail(mailOptions, (err, info) => {
                         if (err) {
-                            console.log(err);
+                            console.log(err)
                         } else {
-                            console.log(info);
+                            console.log(info)
                         }
-                    });
+                    })
                 }
                 data = userGame.toJSON()
-                data.userGameBiodata = userGameBiodata.toJSON();
-                return response(res, 201, true, 'UserGame created', data);
+                data.userGameBiodata = userGameBiodata.toJSON()
+                return response(res, 201, true, 'UserGame created', data)
             }
         } catch (error) {
-            console.log(error);
+            console.log(error)
             if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
-                return response(res, 400, false, error.message, null);
+                return response(res, 400, false, error.message, null)
             } else {
-                return response(res, 500, false, error.message, null);
+                return response(res, 500, false, error.message, null)
             }
         }
     },
     // Endpoint POST /forgot-password
     postForgotPassword: async (req, res) => {
         try {
-            const port = process.env.PORT || 3000;
-            const { emailOrUsername } = req.body;
-            console.log('emailOrUsername', emailOrUsername);
+            const { emailOrUsername } = req.body
             const isEmail = (text) => {
-                const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
-                return regex.test(text);
+                const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+                return regex.test(text)
             }
             var classUserGame
             if (isEmail(emailOrUsername)) {
-                console.log('email');
+                console.log('email')
                 const userGameBiodata = await UserGameBiodata.findOne({ 
                     where: { email: emailOrUsername },
                     include: [{
                         model: UserGame, 
                         as: 'userGame',
-                        include: [{ model: UserGameBiodata, as : 'userGameBiodata' }]
+                        include: [
+                            { model: UserGameBiodata, as : 'userGameBiodata'},
+                            { model: Otp, as : 'otp'}
+                        ]
                     }]   
-                });
+                })
                 if (!userGameBiodata) {
-                    return res.status(404).json({ message: 'Email not found' });
+                    return res.status(404).json({ message: 'Email not found' })
                 }
-                classUserGame = userGameBiodata.userGame;
+                classUserGame = userGameBiodata.userGame
             } else {
                 const userGame = await UserGame.findOne({
                     where: { username: emailOrUsername },
-                    include: [{ model: UserGameBiodata, as: 'userGameBiodata' }]
+                    include: [
+                        { model: UserGameBiodata, as:'userGameBiodata' },
+                        { model: Otp, as: 'otp' }
+                    ]
                 })
                 if (!userGame) {
-                    return response(res, 404, false, 'Username not found', null);
+                    return response(res, 404, false, 'Username not found', null)
                 }
-                classUserGame = userGame;
+                classUserGame = userGame
             }
-            const token = classUserGame.generateToken();
-            const data = classUserGame.toJSON();
-            data.userGameBiodata = classUserGame.userGameBiodata.toJSON();
+            const token = classUserGame.generateToken()
+            const dataOtp = {
+                otp: Math.floor(Math.random() * 1000000),
+                email: classUserGame.userGameBiodata.email,
+                user_id: classUserGame.id,
+                expire_in: 2 * 60 * 1000,
+            } 
+            var OtpProcess
+            console.log('dataOtp', dataOtp)
+            if (classUserGame.otp.length > 0) {
+                OtpProcess = await Otp.update(dataOtp, {
+                    where: { user_id: classUserGame.id }
+                })
+            } else {
+                OtpProcess = await Otp.create(dataOtp)
+            }
+            if (!OtpProcess) {
+                return response(res, 500, false, 'Internal Server Error', null)
+            }
+            const data = classUserGame.toJSON()
+            data.userGameBiodata = classUserGame.userGameBiodata.toJSON()
             const mailOptions = {
                 from: process.env.EMAIL_USER,
                 to: data.userGameBiodata.email,
-                subject: 'Reset Password',
-                text: `Click this link to reset your password ${process.env.CLIENT_URL}/reset-password?token=${token}`,
+                subject: 'OTP Reset Password',
+                text: `Your OTP is ${dataOtp.otp}`,
                 html: `<!doctype html>
                         <html>
                         <head>
@@ -147,43 +170,85 @@ module.exports = {
                             <title>Simple Transactional Email</title>
                         </head>
                         <body>
-                            <p>Click this link to reset your password</p>
-                            <a href="${process.env.CLIENT_URL}:${port}/reset-password?token=${token}">Reset Password</a>
+                        <!-- OTP -->
+                            <p>Use this OTP to reset your password</p> 
+                            <p>${dataOtp.otp}</p>
                         </body>
                         </html>`
-            };
+            }
             emailTransporter.sendMail(mailOptions, (err, info) => {
                 if (err) {
-                    return response(res, 500, false, err.message, null);
+                    return response(res, 500, false, err.message, null)
                 } else {
-                    console.log(info);
+                    console.log(info)
                 }
-            });
-            return response(res, 200, true, 'Please check your email!', null);
+            })
+            return response(res, 200, true, 'Please check your email!', null)
         } catch (error) {
-            console.log(error);
-            return response(res, 500, false, error.message, null);
+            console.log(error)
+            return response(res, 500, false, error.message, null)
         }
     },
     // Endpoint POST /reset-password
     postResetPassword: async (req, res) => {
         try {
-            const { token } = req.query;
-            const userGame = await UserGame.findOne({
-                where: {
-                    reset_password_token: token,
-                    reset_password_expires: {
-                        [Op.gt]: Date.now()
-                    }
-                }
-            });
-            if (!userGame) {
-                return response(res, 404, false, 'Token is invalid or has expired', null);
+            const { otp, password, emailOrUsername } = req.body
+            const isEmail = (text) => {
+                const regex = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
+                return regex.test(text)
             }
-            return response(res, 200, true, 'Token is valid', null);
+            var classUserGame
+            if (isEmail(emailOrUsername)) {
+                const userGameBiodata = await UserGameBiodata.findOne({ 
+                    where: { email: emailOrUsername },
+                    include: [{
+                        model: UserGame, 
+                        as: 'userGame',
+                        include: [
+                            { model: UserGameBiodata, as : 'userGameBiodata'},
+                            { model: Otp, as : 'otp'}
+                        ]
+                    }]   
+                })
+                if (!userGameBiodata) { return res.status(404).json({ message: 'Email not found' }) }
+                classUserGame = userGameBiodata.userGame
+            } else {
+                const userGame = await UserGame.findOne({
+                    where: { username: emailOrUsername },
+                    include: [
+                        { model: UserGameBiodata, as:'userGameBiodata' },
+                        { model: Otp, as: 'otp' }
+                    ]
+                })
+                if (!userGame) {
+                    return response(res, 404, false, 'Username not found', null)
+                }
+                classUserGame = userGame
+            }
+
+            const otpData = await Otp.findOne({ where: { otp: otp, user_id: classUserGame.id } })
+            if (!otpData) { return response(res, 404, false, 'OTP not found', null) } 
+            // Datenow in milisecond
+            const dateNow = new Date().getTime()
+            // Date Created at in milisecond
+            const dateCreatedAt = otpData.dataValues.updatedAt.getTime()
+            // Date Expired in milisecond
+            const expire_in = otpData.dataValues.expire_in
+            // Date Created at + Date Expired in milisecond
+            const dateExpired = dateCreatedAt + expire_in
+            if (dateNow > dateExpired) {
+                return response(res, 404, false, 'OTP Expired', null)
+            }
+            const update = classUserGame.update({
+                password: encrypt(password)
+            })
+            if (!update) {
+                return response(res, 500, false, 'Internal Server Error', null)
+            }
+            return response(res, 200, true, 'Password has been changed', null)
         } catch (error) {
-            console.log(error);
-            return response(res, 500, false, error.message, null);
+            console.log(error)
+            return response(res, 500, false, error.message, null)
         }
     },
 }
