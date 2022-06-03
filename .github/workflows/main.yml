@@ -29,6 +29,7 @@ jobs:
           echo PROD_DB_HOSTNAME=${{env.DB_HOSTNAME}} >> .env
           echo PROD_DB_PORT=${{env.DB_PORT}} >> .env
           echo PROD_DB_DIALECT=${{env.DB_DIALECT}} >> .env
+          echo HEROKU_API_KEY=${{secrets.HEROKU_API_KEY}} >> .env
           cat .env
       - name: Install sequlize-cli
         run: npm install sequelize-cli
