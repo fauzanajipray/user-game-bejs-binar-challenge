@@ -26,7 +26,6 @@ jobs:
           envkey_PROD_DB_PORT: ${{secrets.DB_PORT}}
           envkey_PROD_DB_DIALECT: ${{secrets.DB_DIALECT}}
           envkey_HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-
       - name: Show .env file
         run: cat .env
       - name: Install sequlize-cli
