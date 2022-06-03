@@ -25,9 +25,8 @@ jobs:
           echo HEROKU_APP_NAME=${HEROKU_APP_NAME} >> .env
           echo HEROKU_EMAIL=${HEROKU_EMAIL} >> .env
           echo TEST_VARIABLE=${TEST_VARIABLE} >> .env
-      - name: Show .env file
-        run: cat .env
-      - name: Install sequlize-cli
+        - name: Show .env file
+          run: cat .env
       - name: Install dependencies
         run: npm install
         run: npm install sequelize-cli
