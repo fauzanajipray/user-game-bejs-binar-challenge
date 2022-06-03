@@ -22,16 +22,11 @@ jobs:
         with:
           envkey_DEBUG: false
           envkey_SOME_API_KEY: "123456abcdef"
-          envkey_SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          envkey_PROD_DB_USERNAME: ${{secrets.DB_USERNAME}}
-          envkey_PROD_DB_PASSWORD: ${{secrets.DB_PASSWORD}}
-          envkey_PROD_DB_NAME: ${{secrets.DB_NAME}}
-          envkey_PROD_DB_HOSTNAME: ${{secrets.DB_HOSTNAME}}
-          envkey_PROD_DB_PORT: ${{secrets.DB_PORT}}
-          envkey_PROD_DB_DIALECT: ${{secrets.DB_DIALECT}}
-          envkey_HEROKU_API_KEY: echo $HEROKU_API_KEY
-          envkey_HEROKU_APP_NAME: echo $HEROKU_APP_NAME
-          envkey_HEROKU_EMAIL: echo $HEROKU_EMAIL
+          envkey_SECRET_KEY: ${{ secrets.TEST_VARIABLE }}
+          envkey_HEROKU_API_KEY: "${HEROKU_API_KEY}"
+          envkey_HEROKU_APP_NAME: "${HEROKU_APP_NAME}"
+          envkey_HEROKU_EMAIL: "${HEROKU_EMAIL}"
+      
       - name: Install dependencies
         run: npm install
       - name: Show .env file
