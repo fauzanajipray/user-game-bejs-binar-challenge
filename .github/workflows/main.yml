@@ -23,12 +23,12 @@ jobs:
       - name: Make envfile
         run: |
           touch ../../.env 
-          echo "PROD_DB_USERNAME=${DB_USERNAME}" >> ../../.env 
-          echo "PROD_DB_PASSWORD=${DB_PASSWORD}" >> ../../.env
-          echo "PROD_DB_NAME=${DB_NAME}" >> ../../.env
-          echo "PROD_DB_HOSTNAME=${DB_HOSTNAME}" >> ../../.env
-          echo "PROD_DB_PORT=${DB_PORT}" >> ../../.env
-          echo "PROD_DB_DIALECT=${DB_DIALECT}" >> ../../.env
+          echo "PROD_DB_USERNAME=${{ secrets.DB_USERNAME }}" >> ../../.env 
+          echo "PROD_DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> ../../.env
+          echo "PROD_DB_NAME=${{ secrets.DB_NAME }}" >> ../../.env
+          echo "PROD_DB_HOSTNAME=${{ secrets.DB_HOSTNAME }}" >> ../../.env
+          echo "PROD_DB_PORT=${{ secrets.DB_PORT }}" >> ../../.env
+          echo "PROD_DB_DIALECT=${{ secrets.DB_DIALECT }}" >> ../../.env
         shell: bash
       - name: Show .env file
         run: cat ../../.env

@@ -128,7 +128,6 @@ module.exports = {
                 }
                 classUserGame = userGame
             }
-            const token = classUserGame.generateToken()
             const dataOtp = {
                 otp: Math.floor(Math.random() * 1000000),
                 email: classUserGame.userGameBiodata.email,
@@ -136,8 +135,9 @@ module.exports = {
                 expire_in: 2 * 60 * 1000,
             } 
             var OtpProcess
-            console.log('dataOtp', dataOtp)
-            if (classUserGame.otp.length > 0) {
+            console.log(classUserGame);
+            // console.log('dataOtp', dataOtp)
+            if (classUserGame.otp == null) {
                 OtpProcess = await Otp.update(dataOtp, {
                     where: { user_id: classUserGame.id }
                 })
