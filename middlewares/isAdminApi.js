@@ -4,7 +4,7 @@ const isAdmin = (req, res, next) => {
     if (user.role_id === 1) {
         next()
     } else {
-        return response(res, 401, false, 'Forbidden', null)
+        return response(res, 403, false, 'Forbidden', null)
     }
 };
 

@@ -82,8 +82,10 @@ module.exports = {
             }
         } catch (error) {
             console.log(error)
-            if (error.name === 'SequelizeValidationError' || error.name === 'SequelizeUniqueConstraintError') {
+            if (error.name === 'SequelizeUniqueConstraintError') {
                 return response(res, 400, false, error.message, null)
+            } else if (error.name === 'SequelizeValidationError'){
+                return response(res, 400, false, error.errors[0].message, null)
             } else {
                 return response(res, 500, false, error.message, null)
             }
@@ -99,7 +101,6 @@ module.exports = {
             }
             var classUserGame
             if (isEmail(emailOrUsername)) {
-                console.log('email')
                 const userGameBiodata = await UserGameBiodata.findOne({ 
                     where: { email: emailOrUsername },
                     include: [{
@@ -128,7 +129,6 @@ module.exports = {
                 }
                 classUserGame = userGame
             }
-            const token = classUserGame.generateToken()
             const dataOtp = {
                 otp: Math.floor(Math.random() * 1000000),
                 email: classUserGame.userGameBiodata.email,
@@ -136,8 +136,7 @@ module.exports = {
                 expire_in: 2 * 60 * 1000,
             } 
             var OtpProcess
-            console.log('dataOtp', dataOtp)
-            if (classUserGame.otp.length > 0) {
+            if (classUserGame.otp !== null) {
                 OtpProcess = await Otp.update(dataOtp, {
                     where: { user_id: classUserGame.id }
                 })
@@ -220,13 +219,9 @@ module.exports = {
 
             const otpData = await Otp.findOne({ where: { otp: otp, user_id: classUserGame.id } })
             if (!otpData) { return response(res, 404, false, 'OTP not found', null) } 
-            // Datenow in milisecond
             const dateNow = new Date().getTime()
-            // Date Created at in milisecond
             const dateCreatedAt = otpData.dataValues.updatedAt.getTime()
-            // Date Expired in milisecond
             const expire_in = otpData.dataValues.expire_in
-            // Date Created at + Date Expired in milisecond
             const dateExpired = dateCreatedAt + expire_in
             if (dateNow > dateExpired) {
                 return response(res, 404, false, 'OTP Expired', null)
