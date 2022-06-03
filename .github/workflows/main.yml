@@ -8,10 +8,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      HEROKU_APP_NAME: "user-game-bejs"
-      HEROKU_EMAIL: ${{secrets.HEROKU_EMAIL}}
-      TEST_VARIABLE: ${{ secrets.TEST_VARIABLE }}
+      DB_USERNAME: "pfzqxocydqvswt"
+      DB_PASSWORD: "13db1dc4371c19e7c780bec629b40da515c49865049e82f5055e01e470505946"
+      DB_NAME: "d3juovg27i85ot"
+      DB_HOSTNAME: "ec2-52-4-104-184.compute-1.amazonaws.com"
+      DB_PORT: 5432
+      DB_DIALECT: postgres
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -20,10 +22,13 @@ jobs:
           node-version: "14.x"
       - name: Make envfile
         run: |
-          echo "export HEROKU_API_KEY=${HEROKU_API_KEY}" > .env
-          echo "export HEROKU_APP_NAME=${HEROKU_APP_NAME}" >> .env
-          echo "export HEROKU_EMAIL=${HEROKU_EMAIL}" >> .env
-          echo "export TEST_VARIABLE=${TEST_VARIABLE}" >> .env
+          touch ../../.env 
+          echo "PROD_DB_USERNAME=${PROD_DB_USERNAME}" > ../../.env 
+          echo "PROD_DB_PASSWORD=${PROD_DB_PASSWORD}" >> ../../.env
+          echo "PROD_DB_NAME=${PROD_DB_NAME}" >> ../../.env
+          echo "PROD_DB_HOSTNAME=${PROD_DB_HOSTNAME}" >> ../../.env
+          echo "PROD_DB_PORT=${PROD_DB_PORT}" >> ../../.env
+          echo "PROD_DB_DIALECT=${PROD_DB_DIALECT}" >> ../../.env
       - name: Show .env file
         run: cat .env
       - name: Install dependencies
