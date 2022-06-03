@@ -30,7 +30,7 @@ jobs:
           echo "PROD_DB_PORT=${PROD_DB_PORT}" >> ../../.env
           echo "PROD_DB_DIALECT=${PROD_DB_DIALECT}" >> ../../.env
       - name: Show .env file
-        run: cat .env
+        run: cat ../../.env
       - name: Install dependencies
         run: npm install
       - name: Install sequlize-cli
