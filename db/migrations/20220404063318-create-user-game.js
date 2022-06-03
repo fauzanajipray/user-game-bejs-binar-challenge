@@ -1,6 +1,9 @@
 'use strict';
+
 module.exports = {
   async up(queryInterface, Sequelize) {
+    console.log('create user_game');
+    console.log(process.env.PROD_DB_HOSTNAME);
     await queryInterface.createTable('user_games', {
       id: {
         allowNull: false,

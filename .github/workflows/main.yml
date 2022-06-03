@@ -4,23 +4,41 @@ on:
     branches: [ main ]
   workflow_dispatch:
 jobs:
+
   build:
     runs-on: ubuntu-latest
-
+    env: 
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
+      DB_PORT: ${{ secrets.DB_PORT }}
+      DB_DIALECT: ${{ secrets.DB_DIALECT }}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
         uses: actions/setup-node@v2
         with: 
           node-version: "14.x"
+      - name: Make envfile
+        run: |
+          touch ../../.env 
+          echo "PROD_DB_USERNAME=${DB_USERNAME}" >> ../../.env 
+          echo "PROD_DB_PASSWORD=${DB_PASSWORD}" >> ../../.env
+          echo "PROD_DB_NAME=${DB_NAME}" >> ../../.env
+          echo "PROD_DB_HOSTNAME=${DB_HOSTNAME}" >> ../../.env
+          echo "PROD_DB_PORT=${DB_PORT}" >> ../../.env
+          echo "PROD_DB_DIALECT=${DB_DIALECT}" >> ../../.env
+      - name: Show .env file
+        run: cat ../../.env
       - name: Install dependencies
         run: npm install
       - name: Install sequlize-cli
         run: npm install sequelize-cli
       - name: Migrate DB
         run: npx sequelize db:migrate --env production
-      - name: Seeding DB
-        run: npx sequelize db:seed:all --env production
+      # - name: Seeding DB
+      #   run: npx sequelize db:seed:all --env production
       # - name: Test
       #   run: npm test
 
