@@ -8,12 +8,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-      PROD_DB_USERNAME: ${{ secrets.DB_USERNAME }}
-      PROD_DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-      PROD_DB_NAME: ${{ secrets.DB_NAME }}
-      PROD_DB_HOSTNAME: ${{ secrets.DB_HOSTNAME }}
-      PROD_DB_PORT: ${{ secrets.DB_PORT }}
-      PROD_DB_DIALECT: ${{ secrets.DB_DIALECT }}
+      PROD_DB_USERNAME: "pfzqxocydqvswt"
+      PROD_DB_PASSWORD: "13db1dc4371c19e7c780bec629b40da515c49865049e82f5055e01e470505946"
+      PROD_DB_NAME: "d3juovg27i85ot"
+      PROD_DB_HOSTNAME: "ec2-52-4-104-184.compute-1.amazonaws.com"
+      PROD_DB_PORT: 5432
+      PROD_DB_DIALECT: "postgres"
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
