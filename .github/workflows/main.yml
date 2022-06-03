@@ -29,6 +29,7 @@ jobs:
           echo "PROD_DB_HOSTNAME=${DB_HOSTNAME}" >> ../../.env
           echo "PROD_DB_PORT=${DB_PORT}" >> ../../.env
           echo "PROD_DB_DIALECT=${DB_DIALECT}" >> ../../.env
+        shell: bash
       - name: Show .env file
         run: cat ../../.env
       - name: Install dependencies
