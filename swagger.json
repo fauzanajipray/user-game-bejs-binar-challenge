@@ -1,9 +1,8 @@
 {
-  "swagger": "2.0",
+  "openapi": "3.0.0",
   "info": {
-    "description": "This is a Binar Academy Challenge documentation API Usergames. You can find this project at [Github Repository](https://github.com/fauzanajipray/user-game-bejs-binar-challenge)",
-    "version": "1.0.0",
-    "title": "Swagger Petstore",
+    "title": "UserGame API Documentation",
+    "description": "This is a Binar Academy Challenge documentation API Usergames. You can find\nthis project at [Github\nRepository](https://github.com/fauzanajipray/user-game-bejs-binar-challenge)\n",
     "termsOfService": "http://swagger.io/terms/",
     "contact": {
       "email": "fauzan.a.pray@gmail.com"
@@ -11,195 +10,58 @@
     "license": {
       "name": "Apache 2.0",
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }
+    },
+    "version": "1.0.0"
   },
-  "host": "localhost:3000",
-  "basePath": "/api",
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://user-game-bejs.herokuapp.com",
+      "description": "Production"
+    },
+    {
+      "url": "http://localhost:3000/api",
+      "description": "Local Development"
+    }
+  ],
   "tags": [
     {
-      "name": "usergame",
-      "description": "Everything about user game"
-    },
-    {
-      "name": "history",
-      "description": "History of Usergames"
-    },
-    {
-      "name": "auth",
+      "name": "Auth",
       "description": "Everything about Authentication"
+    },
+    {
+      "name": "Admin",
+      "description": "Only Admin role can access this routes"
+    },
+    {
+      "name": "User",
+      "description": "All Roles can access this routes"
     }
   ],
-  "schemes": [
-    "http"
-  ],
   "paths": {
-    "/usergame": {
-      "get": {
-        "tags": [
-          "usergame"
-        ],
-        "summary": "Find all data usergames",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findAllUserGame",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "username": {
-                        "type": "string",
-                        "example": "Kennedy_Wolf"
-                      },
-                      "password": {
-                        "type": "string",
-                        "example": "gj7pTZ1rAkNQJjW"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:35:13.707Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:35:13.707Z"
-                      },
-                      "userGameBiodata": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "first_name": {
-                            "type": "string",
-                            "example": "Clint"
-                          },
-                          "last_name": {
-                            "type": "string",
-                            "example": "Gibson"
-                          },
-                          "address": {
-                            "type": "string",
-                            "example": "0556 Schuster Lake"
-                          },
-                          "email": {
-                            "type": "string",
-                            "example": "Clint_Gibson@gmail.com"
-                          },
-                          "user_id": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "example": "2022-04-04T17:36:13.735Z"
-                          },
-                          "updatedAt": {
-                            "type": "string",
-                            "example": "2022-04-04T17:36:13.735Z"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid status value"
-          }
-        },
-        "security": [
-          {
-            "petstore_auth": [
-              "write:pets",
-              "read:pets"
-            ]
-          }
-        ]
-      },
+    "/login": {
       "post": {
         "tags": [
-          "usergame"
+          "Auth"
         ],
-        "summary": "Add a new usergame to the database",
-        "description": "",
-        "operationId": "addUserGame",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Usergames object that needs to be added to the database",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Kennedy_Wolf"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "gj7pTZ1rAkNQJjW"
-                },
-                "first_name": {
-                  "type": "string",
-                  "example": "Clint"
-                },
-                "last_name": {
-                  "type": "string",
-                  "example": "Gibson"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "Clint_Gibson@gmail.com"
-                },
-                "address": {
-                  "type": "string",
-                  "example": "0556 Schuster Lake"
-                }
+        "summary": "Login user",
+        "operationId": "authLogin",
+        "requestBody": {
+          "description": "Login credentials",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login_body"
               }
             }
           }
-        ],
+        },
         "responses": {
-          "201": {
-            "description": "Input success",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "UserGame created"
-                },
-                "data": {
-                  "type": "object"
-                }
-              }
-            }
+          "200": {
+            "description": "Success"
           },
           "400": {
             "description": "Invalid input"
@@ -207,785 +69,930 @@
         }
       }
     },
-    "/usergame/{id}": {
+    "/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Register user",
+        "operationId": "authRegister",
+        "requestBody": {
+          "description": "User that needs to be added to the store",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/register_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/forgot-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Forgot password - send OTP to email",
+        "operationId": "authforgot",
+        "requestBody": {
+          "description": "Login credentials",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/forgotpassword_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/reset-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Reset password with OTP",
+        "operationId": "authResetPassword",
+        "requestBody": {
+          "description": "Login credentials",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/resetpassword_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "400": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/usergame": {
       "get": {
         "tags": [
-          "usergame"
+          "Admin"
         ],
-        "summary": "Find usergame by ID",
-        "description": "",
-        "operationId": "findOneUserGame",
-        "produces": [
-          "application/json"
+        "summary": "Get all usergame",
+        "operationId": "adminGetUsergames",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/usergame/{userId}": {
+      "get": {
+        "tags": [
+          "Admin"
         ],
+        "summary": "Get Usergame By ID",
+        "operationId": "adminGetUsergame",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
-            "description": "The UserGame id that needs to be fetched. Use 1 for testing. ",
+            "description": "ID of usergame to return",
             "required": true,
-            "type": "integer"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "username": {
-                        "type": "string",
-                        "example": "Kennedy_Wolf"
-                      },
-                      "password": {
-                        "type": "string",
-                        "example": "gj7pTZ1rAkNQJjW"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:35:13.707Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:35:13.707Z"
-                      },
-                      "userGameBiodata": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "first_name": {
-                            "type": "string",
-                            "example": "Clint"
-                          },
-                          "last_name": {
-                            "type": "string",
-                            "example": "Gibson"
-                          },
-                          "address": {
-                            "type": "string",
-                            "example": "0556 Schuster Lake"
-                          },
-                          "email": {
-                            "type": "string",
-                            "example": "Clint_Gibson@gmail.com"
-                          },
-                          "user_id": {
-                            "type": "integer",
-                            "example": 1
-                          },
-                          "createdAt": {
-                            "type": "string",
-                            "example": "2022-04-04T17:36:13.735Z"
-                          },
-                          "updatedAt": {
-                            "type": "string",
-                            "example": "2022-04-04T17:36:13.735Z"
-                          }
-                        }
-                      },
-                      "userGameHistories": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "integer",
-                              "example": 5
-                            },
-                            "score": {
-                              "type": "integer",
-                              "example": 24
-                            },
-                            "time_played": {
-                              "type": "integer",
-                              "example": 1140000
-                            },
-                            "user_id": {
-                              "type": "integer",
-                              "example": 1
-                            },
-                            "createdAt": {
-                              "type": "string",
-                              "example": "2022-04-04T17:40:13.761Z"
-                            },
-                            "updatedAt": {
-                              "type": "string",
-                              "example": "2022-04-04T17:40:13.761Z"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Success"
           },
-          "404": {
-            "description": "User not found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "UserGame not found"
-                }
-              }
-            }
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
-          "usergame"
+          "Admin"
         ],
-        "summary": "Update usergame by ID",
-        "description": "",
-        "operationId": "UpdateUserGame",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Put Usergame By ID",
+        "operationId": "adminPutUsergame",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
-            "description": "The UserGame id that needs to be updated. Use 1 for testing. ",
+            "description": "ID of usergame to return",
             "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "Usergames object that needs to be added to the database",
-            "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Kennedy_Wolf"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "gj7pTZ1rAkNQJjW"
-                },
-                "first_name": {
-                  "type": "string",
-                  "example": "Clint"
-                },
-                "last_name": {
-                  "type": "string",
-                  "example": "Gibson"
-                },
-                "email": {
-                  "type": "string",
-                  "example": "Clint_Gibson@gmail.com"
-                },
-                "address": {
-                  "type": "string",
-                  "example": "0556 Schuster Lake"
-                }
-              }
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "User updated",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "UserGame updated"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "User not found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "UserGame not found"
-                }
+        "requestBody": {
+          "description": "Update data usergame",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usergame_userId_body"
               }
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
-          "usergame"
+          "Admin"
         ],
-        "summary": "Delete usergame by ID",
-        "description": "",
-        "operationId": "DeleteUserGame",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Delete Usergame By ID",
+        "operationId": "adminDeleteUsergame",
         "parameters": [
           {
-            "name": "id",
+            "name": "userId",
             "in": "path",
-            "description": "The UserGame id that needs to be deleted. Use 1 for testing. ",
+            "description": "ID of usergame to return",
             "required": true,
-            "type": "integer"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "User updated",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "UserGame deleted"
-                }
-              }
-            }
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           },
           "404": {
-            "description": "User not found",
+            "description": "Not Found"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/usergame/{userId}/biodata": {
+      "put": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Put Usergame Biodata By userId",
+        "operationId": "adminPutUsergameBiodata",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "description": "ID of usergame to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "UserGame not found"
-                }
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update data biodata",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/userId_biodata_body"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/userId_biodata_body_1"
               }
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/history": {
       "get": {
         "tags": [
-          "history"
+          "Admin"
         ],
-        "summary": "Find all data history",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "findAllHistoryUserGame",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get all Histories",
+        "operationId": "adminGetHistories",
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 5
-                      },
-                      "score": {
-                        "type": "integer",
-                        "example": 24
-                      },
-                      "time_played": {
-                        "type": "integer",
-                        "example": 1140000
-                      },
-                      "user_id": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:40:13.761Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:40:13.761Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Success"
           },
-          "400": {
-            "description": "Invalid status value"
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
-      },
-      "post": {
-        "tags": [
-          "history"
-        ],
-        "summary": "Find all data history",
-        "description": "Multiple status values can be provided with comma separated strings",
-        "operationId": "AddHistoryUserGame",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
+        },
+        "security": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "History UserGames object that needs to be added to the database",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "score": {
-                  "type": "integer",
-                  "example": 24
-                },
-                "time_played": {
-                  "type": "integer",
-                  "example": 1140000
-                },
-                "user_game_id": {
-                  "type": "integer",
-                  "example": 1
-                }
-              }
-            }
+            "bearerAuth": []
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 5
-                      },
-                      "score": {
-                        "type": "integer",
-                        "example": 24
-                      },
-                      "time_played": {
-                        "type": "integer",
-                        "example": 1140000
-                      },
-                      "user_id": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:40:13.761Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:40:13.761Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+        ]
       }
     },
-    "/history/{id}": {
+    "/history/{historyId}": {
       "get": {
         "tags": [
-          "history"
+          "Admin"
         ],
-        "summary": "Find history by ID",
-        "description": "",
-        "operationId": "findOneHistoryUserGame",
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get History By historyId",
+        "operationId": "adminGetHistory",
         "parameters": [
           {
-            "name": "id",
+            "name": "historyId",
             "in": "path",
-            "description": "The History id that needs to be fetched. Use 18 for testing. ",
+            "description": "ID of history to return",
             "required": true,
-            "type": "integer"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer",
-                        "example": 5
-                      },
-                      "score": {
-                        "type": "integer",
-                        "example": 24
-                      },
-                      "time_played": {
-                        "type": "integer",
-                        "example": 1140000
-                      },
-                      "user_id": {
-                        "type": "integer",
-                        "example": 1
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:40:13.761Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "example": "2022-04-04T17:40:13.761Z"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            "description": "Success"
           },
-          "404": {
-            "description": "User not found"
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "put": {
         "tags": [
-          "history"
+          "Admin"
         ],
-        "summary": "Update usergame by ID",
-        "description": "",
-        "operationId": "UpdateHistoryUserGame",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Update History By historyId",
+        "operationId": "adminPutHistory",
         "parameters": [
           {
-            "name": "id",
+            "name": "historyId",
             "in": "path",
-            "description": "The History id that needs to be updated. Use 1 for testing. ",
+            "description": "ID of history to return",
             "required": true,
-            "type": "integer"
-          },
-          {
-            "in": "body",
-            "name": "body",
-            "description": "History object that needs to be added to the database",
-            "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "score": {
-                  "type": "integer",
-                  "example": 24
-                },
-                "time_played": {
-                  "type": "integer",
-                  "example": 1140000
-                },
-                "user_game_id": {
-                  "type": "integer",
-                  "example": 1
-                }
-              }
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "History updated",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "History updated"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "History not found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "History not found"
-                }
+        "requestBody": {
+          "description": "Update data history",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/history_historyId_body"
               }
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       },
       "delete": {
         "tags": [
-          "history"
+          "Admin"
         ],
-        "summary": "Delete History by ID",
-        "description": "",
-        "operationId": "DeleteHistoryUserGame",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Delete History By historyId",
+        "operationId": "adminDeleteHistory",
         "parameters": [
           {
-            "name": "id",
+            "name": "historyId",
             "in": "path",
-            "description": "The History id that needs to be deleted. Use 1 for testing. ",
+            "description": "ID of history to return",
             "required": true,
-            "type": "integer"
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "User updated",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Hitory deleted"
-                }
-              }
-            }
+            "description": "Success"
           },
-          "404": {
-            "description": "User not found",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Hitory not found"
-                }
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/profile": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get profile info",
+        "operationId": "userGetProfile",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/profile/biodata": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get profile Biodata",
+        "operationId": "userGetProfileBiodata",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get profile Biodata",
+        "operationId": "userPutProfileBiodata",
+        "requestBody": {
+          "description": "Update data biodata",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/profile_biodata_body"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/profile_biodata_body_1"
               }
             }
           }
-        }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
-    "/login": {
+    "/profile/history": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get profile Histories",
+        "operationId": "userGetProfileHistories",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
       "post": {
         "tags": [
-          "auth"
+          "User"
         ],
-        "summary": "Login to the application",
-        "description": "",
-        "operationId": "loginUser",
-        "consumes": [
-          "application/json"
+        "summary": "Create profile History",
+        "operationId": "userPostProfileHistory",
+        "requestBody": {
+          "description": "Update data history",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/profile_history_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/profile/history/{historyId}": {
+      "get": {
+        "tags": [
+          "User"
         ],
-        "produces": [
-          "application/json"
-        ],
+        "summary": "Get profile History",
+        "operationId": "userGetProfileHistory",
         "parameters": [
           {
-            "in": "body",
-            "name": "body",
-            "description": "Login credentials",
+            "name": "historyId",
+            "in": "path",
+            "description": "ID of history to return",
             "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string",
-                  "example": "Kennedy_Wolf"
-                },
-                "password": {
-                  "type": "string",
-                  "example": "gj7pTZ1rAkNQJjW"
-                }
-              }
+              "type": "integer",
+              "format": "int64"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Login success",
+            "description": "Success"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Put profile History",
+        "operationId": "userPutProfileHistory",
+        "parameters": [
+          {
+            "name": "historyId",
+            "in": "path",
+            "description": "ID of history to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Success"
-                },
-                "data": {
-                  "type": "object"
-                }
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update data history",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/history_historyId_body_1"
               }
             }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
           },
-          "404": {
-            "description": "User not found",
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete profile History",
+        "operationId": "userDeleteProfileHistory",
+        "parameters": [
+          {
+            "name": "historyId",
+            "in": "path",
+            "description": "ID of history to return",
+            "required": true,
+            "style": "simple",
+            "explode": false,
             "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "User not found"
-                }
-              }
+              "type": "integer",
+              "format": "int64"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
           },
-          "400": {
-            "description": "Invalid input"
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object"
+          }
+        }
+      },
+      "login_body": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Kennedy_Wolf"
+          },
+          "password": {
+            "type": "string",
+            "example": "gj7pTZ1rAkNQJjW"
+          }
+        }
+      },
+      "register_body": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Kennedy_Wolf"
+          },
+          "password": {
+            "type": "string",
+            "example": "gj7pTZ1rAkNQJjW"
+          },
+          "email": {
+            "type": "string",
+            "example": "contoh@email.com"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "Kennedy"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Wolf"
+          },
+          "address": {
+            "type": "string",
+            "example": "Semarang"
+          }
+        }
+      },
+      "forgotpassword_body": {
+        "type": "object",
+        "properties": {
+          "emailOrUsername": {
+            "type": "string",
+            "example": "Kennedy_Wolf"
+          }
+        }
+      },
+      "resetpassword_body": {
+        "type": "object",
+        "properties": {
+          "emailOrUsername": {
+            "type": "string",
+            "example": "Kennedy_Wolf"
+          },
+          "otp": {
+            "type": "string",
+            "example": "376904"
+          },
+          "password": {
+            "type": "string",
+            "example": "123123123"
+          }
+        }
+      },
+      "usergame_userId_body": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "Kennedy_Wolf"
+          },
+          "password": {
+            "type": "string",
+            "example": "gj7pTZ1rAkNQJjW"
+          }
+        }
+      },
+      "userId_biodata_body": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "contoh@email.com"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "Kennedy"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Wolf"
+          },
+          "address": {
+            "type": "string",
+            "example": "Semarang"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "userId_biodata_body_1": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "contoh@email.com"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "Kennedy"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Wolf"
+          },
+          "address": {
+            "type": "string",
+            "example": "Semarang"
+          }
+        }
+      },
+      "history_historyId_body": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "example": 90
+          },
+          "time_played": {
+            "type": "integer",
+            "example": 1200000
+          }
+        }
+      },
+      "profile_biodata_body": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "contoh@email.com"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "Kennedy"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Wolf"
+          },
+          "address": {
+            "type": "string",
+            "example": "Semarang"
+          },
+          "image": {
+            "type": "string",
+            "format": "binary"
+          }
+        }
+      },
+      "profile_biodata_body_1": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "contoh@email.com"
+          },
+          "first_name": {
+            "type": "string",
+            "example": "Kennedy"
+          },
+          "last_name": {
+            "type": "string",
+            "example": "Wolf"
+          },
+          "address": {
+            "type": "string",
+            "example": "Semarang"
+          }
+        }
+      },
+      "profile_history_body": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "example": 90
+          },
+          "time_played": {
+            "type": "integer",
+            "example": 1200000
+          }
+        }
+      },
+      "history_historyId_body_1": {
+        "type": "object",
+        "properties": {
+          "score": {
+            "type": "integer",
+            "example": 90
+          },
+          "time_played": {
+            "type": "integer",
+            "example": 1200000
           }
         }
       }
-    }
-  },
-  "securityDefinitions": {
-    "petstore_auth": {
-      "type": "oauth2",
-      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
-      "flow": "implicit",
-      "scopes": {
-        "write:pets": "modify pets in your account",
-        "read:pets": "read your pets"
-      }
     },
-    "api_key": {
-      "type": "apiKey",
-      "name": "api_key",
-      "in": "header"
-    }
-  },
-  "definitions": {
-    "Usergame": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "username": {
-          "type": "string"
-        },
-        "password": {
-          "type": "string"
-        }
-      }
-    },
-    "UsergameBiodata": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "first_name": {
-          "type": "string"
-        },
-        "last_name": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        },
-        "address": {
-          "type": "string"
-        },
-        "user_id":{
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
-    "UsergameHistory": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "score": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "time_played": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "user_id":{
-          "type": "integer",
-          "format": "int64"
-        }
-      }
-    },
-    "ApiResponse": {
-      "type": "object",
-      "properties": {
-        "message": {
-          "type": "string"
-        },
-        "data": {
-          "type": "object/array"
-        }
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
-  },
-  "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
   }
 }
