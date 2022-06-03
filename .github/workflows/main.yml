@@ -20,15 +20,15 @@ jobs:
           node-version: "14.x"
       - name: Make envfile
         run: |
-          touch .env
-          echo HEROKU_API_KEY=${HEROKU_API_KEY} > .env
-          echo HEROKU_APP_NAME=${HEROKU_APP_NAME} >> .env
-          echo HEROKU_EMAIL=${HEROKU_EMAIL} >> .env
-          echo TEST_VARIABLE=${TEST_VARIABLE} >> .env
-        - name: Show .env file
-          run: cat .env
+          echo "export HEROKU_API_KEY=${HEROKU_API_KEY}" > .env
+          echo "export HEROKU_APP_NAME=${HEROKU_APP_NAME}" >> .env
+          echo "export HEROKU_EMAIL=${HEROKU_EMAIL}" >> .env
+          echo "export TEST_VARIABLE=${TEST_VARIABLE}" >> .env
+      - name: Show .env file
+        run: cat .env
       - name: Install dependencies
         run: npm install
+      - name: Install sequlize-cli
         run: npm install sequelize-cli
       - name: Migrate DB
         run: npx sequelize db:migrate --env production
@@ -37,15 +37,15 @@ jobs:
       # - name: Test
       #   run: npm test
 
-  # deploy:
-  #   runs-on: ubuntu-latest
-  #   needs: [build]
-  #   env: 
-  #     ENV_VARIABLE: PROD
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: akhileshns/heroku-deploy@v3.12.12
-  #       with:
-  #         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-  #         heroku_app_name: "user-game-bejs"
-  #         heroku_email: ${{secrets.HEROKU_EMAIL}}
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    env: 
+      ENV_VARIABLE: PROD
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "user-game-bejs"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
