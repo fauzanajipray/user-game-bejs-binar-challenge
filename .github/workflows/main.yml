@@ -8,7 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-      environment: PROD
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_APP_NAME: "user-game-bejs"
+      HEROKU_EMAIL: ${{secrets.HEROKU_EMAIL}}
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js
@@ -27,8 +29,9 @@ jobs:
           envkey_PROD_DB_HOSTNAME: ${{secrets.DB_HOSTNAME}}
           envkey_PROD_DB_PORT: ${{secrets.DB_PORT}}
           envkey_PROD_DB_DIALECT: ${{secrets.DB_DIALECT}}
-          envkey_HEROKU_API_KEY: ${{secrets.HEROKU_API_KEY}}
-          some_other_variable: foobar
+          envkey_HEROKU_API_KEY: $HEROKU_API_KEY
+          envkey_HEROKU_APP_NAME: $HEROKU_APP_NAME
+          envkey_HEROKU_EMAIL: $HEROKU_EMAIL
       - name: Install dependencies
         run: npm install
       - name: Show .env file
