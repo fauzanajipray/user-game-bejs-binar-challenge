@@ -15,13 +15,13 @@ module.exports = {
         dialect: "postgres"
     },
     production: {
-        username: process.env.PROD_DB_USERNAME,
-        password: process.env.PROD_DB_PASSWORD,
-        database: process.env.PROD_DB_NAME,
-        host: process.env.PROD_DB_HOSTNAME,
-        port: parseInt(process.env.PROD_DB_PORT),
-        url: `${process.env.PROD_DB_DIALECT}://${process.env.PROD_DB_USERNAME}:${process.env.PROD_DB_PASSWORD}@${process.env.PROD_DB_HOSTNAME}:${process.env.PROD_DB_PORT}/${process.env.PROD_DB_NAME}`,
-        dialect: process.env.PROD_DB_DIALECT,
+        username: "nnmmtewomaqhls",
+        password: "c48e3b6fae673e06dfbefb54a1167aece2d03bb34abdeb2495bc2d7693dad791",
+        database: "d2b70f2ujk5bjs",
+        host: "ec2-34-231-221-151.compute-1.amazonaws.com",
+        port: 5432,
+        url: "postgres://nnmmtewomaqhls:c48e3b6fae673e06dfbefb54a1167aece2d03bb34abdeb2495bc2d7693dad791@ec2-34-231-221-151.compute-1.amazonaws.com:5432/d2b70f2ujk5bjs",
+        dialect: "postgres",
         dialectOptions: {
           ssl: { 
             require: true,
