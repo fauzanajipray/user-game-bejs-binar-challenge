@@ -88,7 +88,6 @@ module.exports = {
           password: password,
           role_id: 2,
         })
-        console.log("newUserGame :" + newUserGame);
         if (newUserGame) {
           const newUserGameBiodata = await UserGameBiodata.create({
             user_id: newUserGame.id,
@@ -98,6 +97,31 @@ module.exports = {
             email: email,
           });
           if (newUserGameBiodata) {
+            const mailOptions = {
+              from: process.env.EMAIL_USER,
+              to: email,
+              subject: 'Welcome to Game State',
+              text: `Welcome to Game State, ${first_name} ${last_name}`,
+              html: `<!doctype html>
+                      <html>
+                      <head>
+                          <meta name="viewport" content="width=device-width">
+                          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                          <title>Simple Transactional Email</title>
+                      </head>
+                      <body>
+                          <p>Welcome to Game State, ${first_name} ${last_name}, date ${new Date()}</p>
+                      </body>
+                      </html>`
+            }
+            emailTransporter.sendMail(mailOptions, (err, info) => {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log(info)
+                }
+            })
+
             req.flash("alertMessage", "Register success!");
             req.flash("alertStatus", "success");
             res.redirect("/login");
