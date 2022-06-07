@@ -222,7 +222,7 @@ module.exports = {
                     </head>
                     <body>
                         <p>Click this link to reset your password</p>
-                        <a href="${process.env.CLIENT_URL}:${port}/reset-password?token=${token}">Reset Password</a>
+                        <a href="${process.env.CLIENT_URL}/reset-password?token=${token}">Reset Password</a>
                     </body>
                     </html>`
         };
