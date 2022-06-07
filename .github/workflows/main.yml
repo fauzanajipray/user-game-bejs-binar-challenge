@@ -25,7 +25,7 @@ jobs:
       - name: Install sequlize-cli
         run: npm install sequelize-cli
       - name: Migrate DB
-#         run: npx sequelize db:migrate --env production
+        run: npx sequelize db:migrate --env production
 #       - name: Seeding DB
 #         run: npx sequelize db:seed:all --env production
       # - name: Test
