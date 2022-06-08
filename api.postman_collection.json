@@ -18,22 +18,21 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "januzanj",
+									"value": "Bartholome21",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "123123123",
+									"value": "12345678",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/login",
+							"raw": "{{server}}/api/login",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"login"
@@ -52,7 +51,7 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "januzanj2",
+									"value": "bepoapo",
 									"type": "text"
 								},
 								{
@@ -62,35 +61,114 @@
 								},
 								{
 									"key": "email",
-									"value": "",
+									"value": "bepoapo123@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "first_name",
-									"value": "Janu",
+									"value": "Bepo",
 									"type": "text"
 								},
 								{
 									"key": "last_name",
-									"value": "Yoga",
+									"value": "Apo",
 									"type": "text"
 								},
 								{
 									"key": "address",
-									"value": "",
+									"value": "Semarang",
 									"type": "text"
 								}
 							]
 						},
 						"url": {
-							"raw": "localhost:3000/api/register",
+							"raw": "{{server}}/api/register",
 							"host": [
-								"localhost"
+								"{{server}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "emailOrUsername",
+									"value": "Britney36",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/forgot-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "emailOrUsername",
+									"value": "januzanj",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "emailOrUsername",
+									"value": "Britney36",
+									"type": "text"
+								},
+								{
+									"key": "otp",
+									"value": "352863",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123123123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/reset-password",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"reset-password"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "januzanj",
+									"disabled": true
+								}
 							]
 						}
 					},
@@ -120,18 +198,19 @@
 					"response": []
 				},
 				{
-					"name": "Histories",
+					"name": "Usergame",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/api/history",
+							"raw": "{{server}}/api/usergame/1",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"api",
-								"history"
+								"usergame",
+								"1"
 							]
 						}
 					},
@@ -176,21 +255,6 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "username",
-									"value": "Gino123",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123123123",
-									"type": "text"
-								}
-							]
-						},
 						"url": {
 							"raw": "{{server}}/api/usergame/9",
 							"host": [
@@ -256,34 +320,129 @@
 					"response": []
 				},
 				{
-					"name": "Usergames Copy",
+					"name": "Histories",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/api/usergame",
+							"raw": "{{server}}/api/history",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"api",
-								"usergame"
+								"history"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "score",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "time_played",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/history/1",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"history",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "score",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "time_played",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/history/15",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"history",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "score",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "time_played",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{server}}/api/history/15",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"api",
+								"history",
+								"15"
 							]
 						}
 					},
 					"response": []
 				}
 			],
-			"auth": {
-				"type": "bearer",
-				"bearer": [
-					{
-						"key": "token",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJqYW51emFuaiIsInJvbGVfaWQiOjEsImlhdCI6MTY1MzczNTU0MywiZXhwIjoxNjUzNzUzNTQzfQ.99DfcCrY8GX5x2vIpeRRle3ByJWMOA-_VeuA5Vk_Y_M",
-						"type": "string"
-					}
-				]
-			},
 			"event": [
 				{
 					"listen": "prerequest",
@@ -530,7 +689,7 @@
 		"bearer": [
 			{
 				"key": "token",
-				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwidXNlcm5hbWUiOiJqYW51emFuaiIsInJvbGVfaWQiOjEsImlhdCI6MTY1Mzc0MzkwMywiZXhwIjoxNjUzNzYxOTAzfQ.YgijzNTq30DXWz1yodgQZMiQKei1tZUm_fhFb5H6Qio",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJCYXJ0aG9sb21lMjEiLCJyb2xlX2lkIjoyLCJpYXQiOjE2NTQyNzg4MTAsImV4cCI6MTY1NDI5NjgxMH0.Nr8Wu-nWzlJoFdXZyZtJxRPCkhh4MlCQ3-JUnVRpz2A",
 				"type": "string"
 			}
 		]
@@ -541,7 +700,8 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.globals.set(\"server\", \"localhost:3000\");"
+					"pm.globals.set(\"server\", \"https://user-game-bejs.herokuapp.com\");",
+					"pm.globals.set(\"server_local\", \"localhost:3000\");"
 				]
 			}
 		},
