@@ -19,7 +19,7 @@
   },
   "servers": [
     {
-      "url": "https://user-game-bejs.herokuapp.com",
+      "url": "https://user-game-bejs.herokuapp.com/api",
       "description": "Production"
     },
     {
