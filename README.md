@@ -1,3 +1,5 @@
+![amain workflow](https://github.com/fauzanajipray/user-game-bejs-binar-challenge/actions/workflows/main.yml/badge.svg) 
+
 ## REST API USER GAME BEJS CHALLENGE BINAR ACADEMY
 
 # How to use
