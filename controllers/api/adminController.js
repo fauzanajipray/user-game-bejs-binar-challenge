@@ -5,7 +5,25 @@ const encrypt = require('../../utils/encrypt');
 module.exports = {
     getUsergames: async (req, res) => {
         try {
-            const userGames = await UserGame.findAll({ include: ['userGameBiodata'] });
+            if (req.query.page < 1) {
+                return response(res, 400, false, 'Page must be greater than 0', null); 
+            } 
+            const page = req.query.page || 1
+            const limit = 10
+            const offset = (page - 1) * limit;
+            const userGames = await UserGame.findAndCountAll({ 
+                include: ['userGameBiodata'],
+                limit: limit,
+                offset: offset,
+                order: [
+                    ['id', 'DESC']
+                ]
+            });
+            userGames.totalPage = Math.ceil(userGames.count / limit);;
+            userGames.page = parseInt(page);
+            userGames.nextPage = page < userGames.totalPage ? parseInt(page) + 1 : null;;
+            userGames.prevPage = page > 1 ? page - 1 : null;
+
             return response(res, 200, true, 'Success', userGames);
         } catch (error) {
             console.log(error);

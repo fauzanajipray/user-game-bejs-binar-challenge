@@ -67,7 +67,7 @@ module.exports = {
                 where: { id: user.id }, 
                 include: { model: UserGameBiodata, as: 'userGameBiodata' } 
             });
-
+            var dataBiodata = {}
             if (!userGame) { return response(res, 404, false, 'UserGame not found', null) }
             if (filename) {
                 dataBiodata = {
